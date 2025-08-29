@@ -1,0 +1,22 @@
+{
+  "name": "talespin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "dev-mobile": "vite --host 192.168.0.230",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "sass": "^1.91.0",
+    "utf8": "^3.0.0",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^7.1.2"
+  }
+}

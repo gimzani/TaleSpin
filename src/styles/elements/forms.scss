@@ -1,0 +1,42 @@
+
+
+textarea {
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  border: solid 1px #777;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+input[type=text] {
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  border: solid 1px #777;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+select {
+  background-color: rgba(0,0,0,0.5);
+  color: #fff;
+  border: solid 1px #777;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+button {
+  background-color: #ddd;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  padding: 5px 15px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.w-100 {
+  width: 100%;
+}
