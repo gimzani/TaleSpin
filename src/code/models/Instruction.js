@@ -1,11 +1,12 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
-export default class PromptModel {
+export default class Instruction {
 
-  promptCode = getKeyCode(6);
-  name = null;
-  prompt = null;
+  id = getKeyCode(6);
+  name = '--';
+  text = null;
+  type = null;
   sortOrder = 0;
 
   constructor(options) {
@@ -13,9 +14,10 @@ export default class PromptModel {
   } 
 
   init(options) {
-    this.promptCode = options.promptCode || this.promptCode;
+    this.id = options.id || this.id;
     this.name = options.name || this.name;
-    this.prompt = options.prompt || this.prompt;
+    this.text = options.text || this.text;
+    this.type = options.type || this.type;
     this.sortOrder = parseInt(options.sortOrder) || this.sortOrder;
   }
 

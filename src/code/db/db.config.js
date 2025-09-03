@@ -3,9 +3,11 @@ export default {
   version: 1,
 
   schema: [
-    { name: 'Characters', keys:'characterCode' },
-    { name: 'Heroes', keys:'heroCode' },
-    { name: 'Scenarios', keys:'scenarioCode' },
-    { name: 'SystemPrompts', keys:'promptCode' }
+    { name: 'Characters', keys:'id' },
+    { name: 'Heroes', keys:'id' },
+    { name: 'Instructions', keys:'id' },
+    { name: 'Scenes', keys:'id' },
+    { name: 'Settings', keys:'id' },
+    { name: 'Tales', keys:'id' }
   ]
 }

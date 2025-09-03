@@ -1,22 +1,24 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
-export default class CharacterModel {
+export default class Tale {
 
-  characterCode = getKeyCode(6);
-  name = 'unkown';
-  prompt = null;
-  imageUrl = null;
+  id = getKeyCode(6);
+  name = '--';
+  description = null;
+
+  hero = null
+  characters = [];
+  sceneBuffer = [];  
 
   constructor(options) {
     if(options) { this.init(options); }
   } 
 
   init(options) {
-    this.characterCode = options.characterCode || this.characterCode;
+    this.id = options.id || this.id;
     this.name = options.name || this.name;
-    this.prompt = options.prompt || this.prompt;
-    this.imageUrl = options.imageUrl || this.imageUrl;
+    this.description = options.description || this.description;
   }
 
 }

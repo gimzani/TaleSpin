@@ -2,8 +2,8 @@
 //----------------------------------------------------------
 import { ref } from 'vue'
 //----------------------------------------------------------
-import ChatOutput from 'src/ui/controls/ChatOutput.vue';
-import ChatInput from 'src/ui/controls/ChatInput.vue';
+import ChatOutput from 'src/ui/outputs/ChatOutput.vue';
+import ChatInput from 'src/ui/inputs/ChatInput.vue';
 //----------------------------------------------------------
 const props = defineProps({});
 const emit = defineEmits([]);

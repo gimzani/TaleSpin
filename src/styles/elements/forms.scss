@@ -1,42 +1,79 @@
 
 
-textarea {
-  background-color: rgba(0,0,0,0.5);
-  color: #fff;
-  border: solid 1px #777;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
+select,
+textarea,
 input[type=text] {
+  display: block;
   background-color: rgba(0,0,0,0.5);
   color: #fff;
   border: solid 1px #777;
   padding: 10px;
   border-radius: 10px;
   font-size: 1rem;
+
+  &::placeholder {
+    color: #777;
+
+  }
+
+  &:disabled {
+    color: #777;
+    border: solid 1px #333;
+    cursor: not-allowed;
+
+    &::placeholder{
+      color: #333;
+    }
+  }
+
+
 }
 
-select {
-  background-color: rgba(0,0,0,0.5);
-  color: #fff;
-  border: solid 1px #777;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 1rem;
-  width: 100%;
+textarea {
+  resize: vertical;
 }
+
+// buttons ===============================================
 
 button {
-  background-color: #ddd;
-  border: solid 1px transparent;
-  border-radius: 5px;
-  padding: 5px 15px;
+  background-color: rgba(50,50,50,0.5);
+  color: #fff;
+  border: solid 1px #777;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.8rem;
   font-size: 1.1rem;
   cursor: pointer;
+
+  &.info {
+    background-color: rgba(0,0,50,0.5);
+  }
+
+  &.success {
+    background-color: rgba(0,50,0,0.5);
+  }
+
+  &.danger {
+    background-color: rgba(50,0,0,0.5);
+  }
+
+  &.icon {
+    padding: 0.2rem;
+    font-size: 0.75rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.125rem;
+  }
+
 }
 
-.w-100 {
+.button-group button {
+  margin-left: 5px;
+  &:first-child button{
+    margin-left: 0;
+  }
+}
+
+.w-100,
+.full {
   width: 100%;
 }

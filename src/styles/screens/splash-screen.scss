@@ -1,0 +1,20 @@
+
+.splash-screen {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10%;
+
+
+  .splash-screen-logo {
+    font-family: 'Style Script';
+    font-size: 5rem;
+  }
+
+  .splash-screen-buttons {
+    margin-top: 3rem;
+  }
+
+
+}
