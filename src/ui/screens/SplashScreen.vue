@@ -1,6 +1,6 @@
 <script setup>
 //----------------------------------------------------------
-import SplashComponent from 'src/ui/components/SplashComponent.vue'
+import SplashComponent from 'src/ui/components/splash/SplashComponent.vue'
 //----------------------------------------------------------
 </script>
 <template>

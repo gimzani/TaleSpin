@@ -1,7 +1,7 @@
 <script setup>
 //----------------------------------------------------------
 import { ref } from 'vue'
-import ChatComponent from 'src/ui/components/ChatComponent.vue'
+import ChatComponent from 'src/ui/components/chat/ChatComponent.vue'
 //----------------------------------------------------------
 </script>
 <template>

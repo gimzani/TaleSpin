@@ -3,18 +3,18 @@
 import { ref, computed, onMounted } from 'vue'
 import TaleSpinDb from 'src/code/db/talespinDb';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
-import DeveloperNav from './ui/components/DeveloperNav.vue';
+import GameFab from './ui/components/GameFab.vue';
 //----------------------------------------------------------
-const db = TaleSpinDb.getInstance();
+const taleSpinDb = TaleSpinDb.getInstance();
 const appStore = useAppStore();
 //----------------------------------------------------------
 onMounted(() => {
-  db.init();
+  taleSpinDb.init();
 });
 //----------------------------------------------------------
 </script>
 
 <template>
 <component :is="appStore.activeScreen" />
-<DeveloperNav></DeveloperNav>
+<GameFab />
 </template>

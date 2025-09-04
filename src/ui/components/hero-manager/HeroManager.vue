@@ -1,0 +1,73 @@
+<script setup>
+//----------------------------------------------------------
+import { ref, onMounted } from 'vue'
+import { useAppStore } from 'src/code/stores/useAppStore'; 
+import { useDialog } from 'src/code/composables/useDialog.js';
+//----------------------------------------------------------
+import HeroList from './controls/HeroList.vue'
+import HeroNewEdit from './controls/HeroNewEdit.vue'
+//----------------------------------------------------------
+const appStore = useAppStore();
+const dialog = useDialog();
+//----------------------------------------------------------
+const items = ref([]);
+const selectedItem = ref(null);
+const selectedItems = ref([]);
+const editingItem = ref(false);
+//----------------------------------------------------------
+async function listItems() {
+  items.value = await appStore.listHeroes();
+}
+//----------------------------------------------------------
+async function saveItem(item) {
+  await appStore.saveHero(item);
+  await listItems();
+  editingItem.value = false;
+}
+//----------------------------------------------------------
+async function removeItem(item) {
+  const confirm = await dialog.confirm({
+    title: 'Confirm Delete',
+    text: `Are you sure you want to delete the character "${item.name}"? This action cannot be undone.`
+  });
+  if(confirm) {
+    await appStore.deleteHero(item.id);
+    await listItems();
+  }
+}
+//----------------------------------------------------------
+function editItem(item) {
+  selectedItem.value = item;
+  editingItem.value = true;
+}
+//----------------------------------------------------------
+onMounted(async () => {
+  await listItems();
+})
+//----------------------------------------------------------
+</script>
+<template>
+<div class="hero-manager">
+
+<HeroList 
+  v-model="selectedItems"
+  :items="items" 
+  @new-item="editingItem=true; selectedItem=null"
+  @edit-item="editItem"
+  @remove-item="removeItem"
+  v-if="!editingItem" />
+
+<HeroNewEdit 
+  :item="selectedItem"
+  @cancel="editingItem=false; selectedItem=null"
+  @save="saveItem"
+  v-if="editingItem" />
+
+</div>
+</template>
+
+<style scoped lang="scss">
+.hero-manager {
+  width: 100%;
+}
+</style>

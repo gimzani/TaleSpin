@@ -2,6 +2,11 @@
 import { getKeyCode } from 'src/code/codegen.js'
 import Outfit from './Outfit.js'
 //---------------------------------------------------------
+// The Hero is the protagonist in the story - he is also the 'user'.
+// They have a set of outfits.
+//  - Outfits are collections of clothing items that can be worn  
+//---------------------------------------------------------
+//---------------------------------------------------------
 export default class Hero {
 
   id = getKeyCode(6);

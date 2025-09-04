@@ -1,6 +1,8 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
+// The Instruction class models a single instruction for an AI system message
+//---------------------------------------------------------
 export default class Instruction {
 
   id = getKeyCode(6);

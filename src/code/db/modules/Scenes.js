@@ -9,10 +9,12 @@ export default class Scenes {
       const tx = this.db.transaction('Scenes', 'readonly');
       const store = tx.objectStore('Scenes');
       store.getAll().addEventListener("success", (evt) => {
-        resolve(evt.target.result);
+        let charactersList = evt.target.result;
+        charactersList.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        resolve(charactersList);
       });
     });
-  } 
+  }
   
   async get(code) {
     return new Promise((resolve) => {
@@ -24,12 +26,23 @@ export default class Scenes {
     });
   }
   
-  async add(req) {
+  async put(req) {
+    let objectClone = JSON.parse(JSON.stringify(req));
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Scenes', 'readonly');
+      const tx = this.db.transaction('Scenes', 'readwrite');
       const store = tx.objectStore('Scenes');
-      store.put(req).addEventListener("success", (evt) => {
+      store.put(objectClone).addEventListener("success", (evt) => {
         resolve(true);
+      });
+    });
+  }
+
+  async delete(code) {
+    return new Promise((resolve) => {
+      const tx = this.db.transaction('Scenes', 'readwrite');
+      const store = tx.objectStore('Scenes');
+      store.delete(code).addEventListener("success", (evt) => {
+        resolve(evt.target.result);
       });
     });
   }

@@ -1,6 +1,6 @@
 <script setup>
 //----------------------------------------------------------
-import ConfigComponent from 'src/ui/components/ConfigComponent.vue'
+import ConfigComponent from 'src/ui/components/config/ConfigComponent.vue'
 //----------------------------------------------------------
 </script>
 <template>

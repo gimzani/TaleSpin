@@ -4,15 +4,18 @@ export default class Settings {
     this.db = db;
   }
 
+
   async list() {
     return new Promise((resolve) => {
       const tx = this.db.transaction('Settings', 'readonly');
       const store = tx.objectStore('Settings');
       store.getAll().addEventListener("success", (evt) => {
-        resolve(evt.target.result);
+        let charactersList = evt.target.result;
+        charactersList.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        resolve(charactersList);
       });
     });
-  } 
+  }
   
   async get(code) {
     return new Promise((resolve) => {
@@ -24,12 +27,23 @@ export default class Settings {
     });
   }
   
-  async add(req) {
+  async put(req) {
+    let objectClone = JSON.parse(JSON.stringify(req));
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Settings', 'readonly');
+      const tx = this.db.transaction('Settings', 'readwrite');
       const store = tx.objectStore('Settings');
-      store.put(req).addEventListener("success", (evt) => {
+      store.put(objectClone).addEventListener("success", (evt) => {
         resolve(true);
+      });
+    });
+  }
+
+  async delete(code) {
+    return new Promise((resolve) => {
+      const tx = this.db.transaction('Settings', 'readwrite');
+      const store = tx.objectStore('Settings');
+      store.delete(code).addEventListener("success", (evt) => {
+        resolve(evt.target.result);
       });
     });
   }

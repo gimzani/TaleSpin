@@ -9,7 +9,9 @@ export default class Instructions {
       const tx = this.db.transaction('Instructions', 'readonly');
       const store = tx.objectStore('Instructions');
       store.getAll().addEventListener("success", (evt) => {
-        resolve(evt.target.result);
+        let charactersList = evt.target.result;
+        charactersList.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        resolve(charactersList);
       });
     });
   }
@@ -24,12 +26,23 @@ export default class Instructions {
     });
   }
   
-  async add(req) {
+  async put(req) {
+    let objectClone = JSON.parse(JSON.stringify(req));
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Instructions', 'readonly');
+      const tx = this.db.transaction('Instructions', 'readwrite');
       const store = tx.objectStore('Instructions');
-      store.put(req).addEventListener("success", (evt) => {
+      store.put(objectClone).addEventListener("success", (evt) => {
         resolve(true);
+      });
+    });
+  }
+
+  async delete(code) {
+    return new Promise((resolve) => {
+      const tx = this.db.transaction('Instructions', 'readwrite');
+      const store = tx.objectStore('Instructions');
+      store.delete(code).addEventListener("success", (evt) => {
+        resolve(evt.target.result);
       });
     });
   }

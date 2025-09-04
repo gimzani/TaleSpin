@@ -86,9 +86,9 @@ The Game objects are all content, but will need to have specific properties to h
 Got the basic look and feel + navigation set up
 
 NEXT:
+  * Characers is the pattern --> IO for Hero, Settings, Instructions
   * Set up "game creation" --> get Kernel running
-  * IO for Hero, Characters, Settings, Instructions
-  * Use 'DeveloperNav' as a FAB - (useful later for in-game commands)
+  
 
 
 ### UI structures

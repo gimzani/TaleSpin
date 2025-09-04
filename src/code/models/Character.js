@@ -2,6 +2,11 @@
 import { getKeyCode } from 'src/code/codegen.js'
 import Outfit from './Outfit.js'
 //---------------------------------------------------------
+// The Character is the supporting person in the story.
+// They have a set of memories and outfits.
+//  - Memories are important information to remember
+//  - Outfits are collections of clothing items that can be worn  
+//---------------------------------------------------------
 export default class Character {
 
   id = getKeyCode(6);

@@ -18,15 +18,18 @@ function loadGame() {
 }
 //----------------------------------------------------------
 </script>
-<template>  
+<template>
+
 <div class="splash-screen-logo">
   TaleSpin
 </div>
+
 <div class="splash-screen-buttons">
   <button @click="newGame">New Game</button>
   <button @click="loadGame">Load Game</button>
 </div>
-<Modal :show="loadGameModal.show" @close="loadGameModal.show=false" close-button="true">
+
+<Modal :show="loadGameModal.show" @close="loadGameModal.show=false" :close-button="true">
   ...Saved Games List
 </Modal>
 </template>

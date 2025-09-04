@@ -18,15 +18,25 @@ watch(() => appStore.activeScreenName, (val) => {
 </script>
 <template>
 <div class="developer-nav">
+
   <select v-model="selectedScreen" @change="screenSelected">
     <option v-for="s in appStore.screenList" :value="s" :key="s">{{ s }}</option>
   </select>
+
+  <button @click="appStore.seedDatabase" v-if="false">Seed</button>
+ 
+  <button>
+    <font-awesome-icon icon="fa-solid fa-cog" />
+  </button>
+
+
 </div>
 </template>
 
 <style scoped lang="scss">
 .developer-nav {
   position: absolute;
-  top: 0; right: 0;
+  top: 10px; right: 10px;
+  display: flex;
 }
 </style>
