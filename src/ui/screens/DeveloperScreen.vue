@@ -18,8 +18,7 @@ watch(() => taleSpinDb.dbReady.value, async () => {
 <template>
 <div class="developer" v-if="ready">
 
-  <div class="dev-portal">        
-    <SettingManager></SettingManager>
+  <div class="dev-portal">
   </div>
 
 </div>

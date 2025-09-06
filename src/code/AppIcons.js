@@ -13,11 +13,13 @@ import {
   faDatabase,
   faEdit,
   faHandPointer,
+  faLock,
   faMinus,
   faPlus,
   faPowerOff,
   faSave,
   faSearch,
+  faSeedling,
   faTimes,
   faUser
 } from '@fortawesome/free-solid-svg-icons'
@@ -38,11 +40,13 @@ export default {
       faDatabase,
       faEdit,
       faHandPointer,
+      faLock,
       faMinus,
       faPlus,
       faPowerOff,
       faSave,
       faSearch,
+      faSeedling,
       faTimes,
       faUser
     );

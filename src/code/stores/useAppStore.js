@@ -4,6 +4,10 @@ import { SCREENS } from 'src/code/enums.js';
 import { seedData } from 'src/code/db/DataSeeder.js';
 import screens from 'src/ui/screens'
 //------------------------------------------------------------------
+import { useToasts } from 'src/code/composables/useToasts.js'
+//------------------------------------------------------------------
+const toasts = useToasts();
+//------------------------------------------------------------------
 export const useAppStore = defineStore('useAppStore', {
   state: () => ({
     screenList: Object.keys(screens),
@@ -13,11 +17,20 @@ export const useAppStore = defineStore('useAppStore', {
     activeScreen: (state) => screens[state.activeScreenName]
    },
   actions: { 
+
     setActiveScreen(name) {
       this.activeScreenName = name;
     },
-    seedDatabase() {
-      seedData(this.db);
+
+    async seedDatabase() {
+
+      const result = await seedData(this.db);
+      if(result.success) {
+        toasts.success(result.message);
+      } else {
+        toasts.error(result.message);
+      }
+
     },
 
     async listCharacters() {
@@ -49,7 +62,6 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteSetting(id) {
       return await this.db.Settings.delete(id);
     },
-
     
     async listInstructions() {
       return await this.db.Instructions.list();
@@ -60,11 +72,6 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteInstruction(id) {
       return await this.db.Instructions.delete(id);
     },
-
-
-
-    
-
-
+ 
   }
 })

@@ -2,18 +2,21 @@
 import { getKeyCode } from 'src/code/codegen.js'
 import Outfit from './Outfit.js'
 //---------------------------------------------------------
-// The Hero is the protagonist in the story - he is also the 'user'.
-// They have a set of outfits.
-//  - Outfits are collections of clothing items that can be worn  
+// The Character in play is the character's current game state
 //---------------------------------------------------------
-//---------------------------------------------------------
-export default class Hero {
+export default class Character {
 
   id = getKeyCode(6);
   name = null;
   description = null;
-  category = null;
+  memories = [];        // important information to remember
   outfits = [];
+
+  assertive = 0.5;
+  affinity = 0.5;
+  wearing = null;
+  earshot = false;
+  active = false;
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -23,8 +26,14 @@ export default class Hero {
     this.id = options.id || this.id;
     this.name = options.name || this.name;
     this.description = options.description || this.description;
-    this.category = options.category || this.category;
     this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
+    
+    assertive = parseFloat(options.assertive) || this.assertive;
+    affinity = parseFloat(options.affinity) || this.affinity;
+    wearing = options.wearing || this.wearing;
+    earshot = !!options.earshot ? options.earshot : this.earshot;
+    active = !!options.active ? options.active : this.active;
+    
   }
 
 }

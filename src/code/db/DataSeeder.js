@@ -5,22 +5,25 @@ import settings from '../_dummydata/settingsList.js';
 import instructions from '../_dummydata/instructionsList.js';
 
 
-export function seedData(db) {
+export async function seedData(db) {
+  try {
+    for(const character of characters) {
+      await db.Characters.put(character);
+    }
 
-  for(const character of characters) {
-    db.Characters.put(character);
+    for(const hero of heroes) {
+      await db.Heroes.put(hero);
+    }
+
+    for(const setting of settings) {
+      await db.Settings.put(setting);
+    }
+
+    for(const instruction of instructions) {
+      await db.Instructions.put(instruction);
+    }
+    return { success: true, message: "Data seeded successfully." }
+  } catch {
+    return { success: false, message: "Data seed failed." }
   }
-
-  for(const hero of heroes) {
-    db.Heroes.put(hero);
-  }
-
-  for(const setting of settings) {
-    db.Settings.put(setting);
-  }
-
-  for(const instruction of instructions) {
-    db.Instructions.put(instruction);
-  }
-
 }

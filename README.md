@@ -86,7 +86,9 @@ The Game objects are all content, but will need to have specific properties to h
 Got the basic look and feel + navigation set up
 
 NEXT:
-  * Characers is the pattern --> IO for Hero, Settings, Instructions
+
+  * Styling config screen and component.
+
   * Set up "game creation" --> get Kernel running
   
 

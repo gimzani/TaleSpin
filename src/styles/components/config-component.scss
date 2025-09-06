@@ -1,0 +1,34 @@
+
+
+.config-component {
+
+  border: solid 1px #000;
+  background-color: rgba(0,0,0,0.25);
+  padding: 0.5rem;
+
+  min-width: 400px;
+
+  .config-content-selection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  .config-content-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1rem 0;
+  }
+
+  //---------------------------------
+  input[type=text] {
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+    resize: vertical;
+
+  }
+
+}

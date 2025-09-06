@@ -10,8 +10,9 @@ import Outfit from './Outfit.js'
 export default class Character {
 
   id = getKeyCode(6);
-  name = '--';
+  name = null;
   description = null;
+  category = null;
   memories = [];        // important information to remember
   outfits = [];
 
@@ -23,6 +24,7 @@ export default class Character {
     this.id = options.id || this.id;
     this.name = options.name || this.name;
     this.description = options.description || this.description;
+    this.category = options.category || this.category;
     this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
   }
 

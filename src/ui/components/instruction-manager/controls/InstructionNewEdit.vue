@@ -21,13 +21,13 @@ watch(() => props.item, (val) => {
 </script>
 <template>
 
-<div class="content-form-frame">
+<div class="component-form-frame">
 
   <div class="section-header">
     <div class="section-title">{{ mode }} Instruction</div>
   </div>
 
-  <div class="content-form">
+  <div class="component-form">
     <div class="mb-2">
       <input class="w-100" type="text" placeholder="content name" v-model="selectedItem.name" />
     </div>

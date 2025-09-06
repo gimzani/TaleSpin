@@ -3,46 +3,36 @@
 @use '../base/_mixins.scss' as _mixins;
 
 
-
-
-  .content-form-frame {
-
-    border: solid 1px #000;
-    background-color: rgba(0,0,0,0.25);
-    padding: 0.5rem;
-
-    .content-form {
-      display: flex;
-      flex-direction: column;
-    }
-
-  }
-
-
-
-.content-list {
+.component-list-frame,
+.component-form-frame {
   border: solid 1px #000;
-  background-color: rgba(0,0,0,0.25);
+  background-color: rgba(0,0,0,0.95);
   padding: 0.5rem;
 
-  .content-list-header {
+  .component-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  //-----------  
+  .component-list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
 
-    .content-list-header-title {
+    .component-list-header-title {
       font-size: 1.4rem;
       font-weight: bold;
     }
   }
 
-  .content-list-items {
+  .component-list-items {
     max-height: 600px;
     overflow-y: auto;
     @include _mixins.scrollbars;
 
-    .content-list-item {
+    .component-list-item {
       border: solid 1px #333;
       background-color: rgba(0,0,0,0.25);
       padding: 0.5rem;
@@ -53,12 +43,12 @@
         border-color: rgba(0,100,0,0.5);
       }
 
-      .content-item-header {
+      .component-item-header {
         display: flex;
         justify-content: space-between;
       }
 
-      .content-item-description {
+      .component-item-description {
         background-color: rgba(0,0,0,0.25);
         white-space: pre-wrap;
         max-height: 250px;
@@ -67,10 +57,10 @@
         font-size: 0.8rem;
         overflow-y: auto;
         @include _mixins.scrollbars;
-
+        line-height: 1.3rem;
       }
 
-      .content-item-buttons {
+      .component-item-buttons {
         display: flex;
         flex-direction: column;
         justify-content: space-between;

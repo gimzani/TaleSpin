@@ -9,11 +9,10 @@ input[type=text] {
   border: solid 1px #777;
   padding: 10px;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 0.8rem;
 
   &::placeholder {
     color: #777;
-
   }
 
   &:disabled {
@@ -26,11 +25,11 @@ input[type=text] {
     }
   }
 
-
 }
 
 textarea {
   resize: vertical;
+  line-height: 1.5rem;
 }
 
 // buttons ===============================================

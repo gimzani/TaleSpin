@@ -10,6 +10,8 @@ import SettingNewEdit from './controls/SettingNewEdit.vue'
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
+const emit = defineEmits(['finish']);
+//----------------------------------------------------------
 const items = ref([]);
 const selectedItem = ref(null);
 const selectedItems = ref([]);
@@ -41,6 +43,10 @@ function editItem(item) {
   editingItem.value = true;
 }
 //----------------------------------------------------------
+function submitSelections() {
+  emit('finish', [...selectedItems.value]);
+}
+//----------------------------------------------------------
 onMounted(async () => {
   await listItems();
 })
@@ -55,6 +61,7 @@ onMounted(async () => {
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"
   @remove-item="removeItem"
+  @finish="submitSelections"
   v-if="!editingItem" />
 
 <SettingNewEdit 
@@ -68,6 +75,8 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .setting-manager {
+  min-width: 500px;
+  max-width: 700px;
   width: 100%;
 }
 </style>

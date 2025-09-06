@@ -10,6 +10,8 @@ import InstructionNewEdit from './controls/InstructionNewEdit.vue'
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
+const emit = defineEmits(['finish']);
+//----------------------------------------------------------
 const items = ref([]);
 const selectedItem = ref(null);
 const selectedItems = ref([]);
@@ -41,6 +43,10 @@ function editItem(item) {
   editingItem.value = true;
 }
 //----------------------------------------------------------
+function submitSelections() {
+  emit('finish', [...selectedItems.value]);
+}
+//----------------------------------------------------------
 onMounted(async () => {
   await listItems();
 })
@@ -55,6 +61,7 @@ onMounted(async () => {
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"
   @remove-item="removeItem"
+  @finish="submitSelections"
   v-if="!editingItem" />
 
 <InstructionNewEdit 

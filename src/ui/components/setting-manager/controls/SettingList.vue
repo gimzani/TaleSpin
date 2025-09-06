@@ -8,7 +8,7 @@ const props = defineProps({
   modelValue: { type: Array },
   items: { type: Array }
 });
-const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item']);
+const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item', 'finish']);
 //----------------------------------------------------------
 const itemSelections = ref(new Set());
 //----------------------------------------------------------
@@ -27,10 +27,10 @@ watch(() => props.modelValue, (newVal) => {
 //----------------------------------------------------------
 </script>
 <template>
-<div class="content-list">
+<div class="component-list-frame">
 
-  <div class="content-list-header">
-    <div class="content-list-header-title">
+  <div class="component-list-header">
+    <div class="component-list-header-title">
       Settings
     </div>   
     <div>
@@ -40,7 +40,7 @@ watch(() => props.modelValue, (newVal) => {
     </div>    
   </div>  
 
-  <div class="content-list-items">
+  <div class="component-list-items">
     <SettingListing 
       v-for="item in items" 
       :key="item.id" 
@@ -49,6 +49,10 @@ watch(() => props.modelValue, (newVal) => {
       @select="toggleSelect(item)"
       @edit="$emit('edit-item', item)"
       @remove="$emit('remove-item', item)" />
+  </div>
+    
+  <div class="text-right mt-3">
+    <button @click="$emit('finish')">Finish</button>
   </div>
 
 </div>

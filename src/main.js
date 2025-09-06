@@ -6,6 +6,7 @@ import AppIcons from 'src/code/AppIcons.js'
 
 import App from './App.vue'
 
+import "toastify-js/src/toastify.css"
 import './styles/main.scss'
 
 const pinia = createPinia();

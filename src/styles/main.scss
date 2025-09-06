@@ -7,9 +7,13 @@
 @use "./elements/layout.scss";
 @use "./elements/spacing.scss";
 @use "./elements/forms.scss";
-@use "./elements/content-forms.scss";
 
 @use "./components/modal.scss";
+
+@use "./components/form-components.scss";
+
+@use "./components/config-component.scss";
+
 
 @use "./screens/splash-screen.scss";
 @use "./screens/config-screen.scss";

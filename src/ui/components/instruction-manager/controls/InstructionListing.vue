@@ -12,8 +12,8 @@ const expanded = ref(false);
 //----------------------------------------------------------
 </script>
 <template>
-<div class="content-list-item" :class="{ selected: selected }" @click="$emit('select', item)">
-  <div class="content-item-header">
+<div class="component-list-item" :class="{ selected: selected }" @click="$emit('select', item)">
+  <div class="component-item-header">
     <div>
       <button class="icon me-2" @click.stop="expanded = !expanded">
         <font-awesome-icon :icon="expanded ? 'fa-chevron-down' : 'fa-chevron-right'" />
@@ -29,6 +29,6 @@ const expanded = ref(false);
       </button>
     </div>
   </div>  
-  <div class="content-item-description" v-if="expanded">{{ item.text }}</div>
+  <div class="component-item-description" v-if="expanded">{{ item.text }}</div>
 </div>
 </template>

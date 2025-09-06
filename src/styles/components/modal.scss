@@ -1,12 +1,12 @@
 //-----------------------------------------------
 $modal-mask-background: rgba(0, 0, 0, 0.5);
-$modal-window-background: #fff;
+$modal-window-background: transparent;
 //-----------------------------
 $modal-scroll-track: #333;
 $modal-scroll-thumb: #ccc;
 //-----------------------------
 $modal-close-border: #000;
-$modal-close-background: #999;
+$modal-close-background: #633;
 //-----------------------------------------------
 .modal-mask {
   position: fixed;
@@ -43,6 +43,10 @@ $modal-close-background: #999;
       transition: transform 0.3s ease;
       padding: 3px 6px;      
       background-color: $modal-window-background;
+      min-width: 50vw;
+      min-height: 30vh;
+
+      border: dotted 1px blue;
 
       &.xl,
       &.extra-large,

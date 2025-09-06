@@ -1,17 +1,17 @@
 
 //---------------------------------------------------------
-export default class Outfit {
+export default class Prompt {
 
-  name = null;
-  text = null;
+  role = null;
+  content = null;
 
   constructor(options) {
     if(options) { this.init(options); }
   } 
 
   init(options) {
-    this.name = options.name || this.name;
-    this.text = options.text || this.text;
+    this.role = options.role || this.role;
+    this.content = options.content || this.content;
   }
 
 }

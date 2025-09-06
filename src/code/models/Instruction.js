@@ -6,7 +6,7 @@ import { getKeyCode } from 'src/code/codegen.js'
 export default class Instruction {
 
   id = getKeyCode(6);
-  name = '--';
+  name = null;
   text = null;
   type = null;
   sortOrder = 0;
