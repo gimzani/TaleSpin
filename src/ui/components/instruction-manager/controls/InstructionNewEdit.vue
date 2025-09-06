@@ -3,6 +3,8 @@
 import { ref, computed, watch } from 'vue'
 import Instruction from 'src/code/models/Instruction.js'
 //----------------------------------------------------------
+import TextareaField from 'src/ui/components/global/TextareaField.vue';
+//----------------------------------------------------------
 const props = defineProps({
   item: { type: Object } 
 });
@@ -32,7 +34,7 @@ watch(() => props.item, (val) => {
       <input class="w-100" type="text" placeholder="content name" v-model="selectedItem.name" />
     </div>
     <div class="mb-2">
-      <textarea class="w-100" rows="12" v-model="selectedItem.text"></textarea>
+      <TextareaField class="w-100" rows="12" v-model="selectedItem.description" :maxWords="500" :showWordCount="true"></TextareaField>
     </div>
   </div>
 

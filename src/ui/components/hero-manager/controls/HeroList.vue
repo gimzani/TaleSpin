@@ -5,24 +5,19 @@ import { ref, watch } from 'vue'
 import HeroListing from './HeroListing.vue';
 //----------------------------------------------------------
 const props = defineProps({
-  modelValue: { type: Array },
+  modelValue: { type: String },
   items: { type: Array }
 });
 const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item', 'finish']);
 //----------------------------------------------------------
-const itemSelections = ref(new Set());
+const itemSelection = ref(null);
 //----------------------------------------------------------
 function toggleSelect(item) {
-  if(itemSelections.value.has(item.id)) {
-    itemSelections.value.delete(item.id);
-  } else {    
-    itemSelections.value.add(item.id);
-  }
-  emit('update:modelValue', Array.from(itemSelections.value));
+  emit('update:modelValue', item.id);
 }
 //----------------------------------------------------------
 watch(() => props.modelValue, (newVal) => {
-  itemSelections.value = new Set(newVal);
+  itemSelection.value = newVal;
 }, { immediate: true }) 
 //----------------------------------------------------------
 </script>
@@ -45,7 +40,7 @@ watch(() => props.modelValue, (newVal) => {
       v-for="item in items" 
       :key="item.id" 
       :item="item" 
-      :selected="itemSelections.has(item.id)"
+      :selected="itemSelection === item.id"
       @select="toggleSelect(item)"
       @edit="$emit('edit-item', item)"
       @remove="$emit('remove-item', item)" />

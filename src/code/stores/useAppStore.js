@@ -9,30 +9,32 @@ import { useToasts } from 'src/code/composables/useToasts.js'
 const toasts = useToasts();
 //------------------------------------------------------------------
 export const useAppStore = defineStore('useAppStore', {
-  state: () => ({
+  state: () => ({    
     screenList: Object.keys(screens),
-    activeScreenName: SCREENS.DEVELOPER
+    activeScreenName: SCREENS.SPLASH,
   }),
   getters: { 
     activeScreen: (state) => screens[state.activeScreenName]
    },
   actions: { 
-
+    //--------------------------------------------------------
     setActiveScreen(name) {
       this.activeScreenName = name;
     },
-
+    //--------------------------------------------------------
     async seedDatabase() {
-
       const result = await seedData(this.db);
       if(result.success) {
         toasts.success(result.message);
       } else {
         toasts.error(result.message);
       }
-
     },
-
+    //--------------------------------------------------------
+    async listSaveGames() {
+      return await this.db.Tales.list();
+    },
+    //--------------------------------------------------------
     async listCharacters() {
       return await this.db.Characters.list();
     },
@@ -42,7 +44,7 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteCharacter(id) {
       return await this.db.Characters.delete(id);
     },
-    
+    //--------------------------------------------------------
     async listHeroes() {
       return await this.db.Heroes.list();
     },
@@ -52,7 +54,7 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteHero(id) {
       return await this.db.Heroes.delete(id);
     },
-    
+    //--------------------------------------------------------
     async listSettings() {
       return await this.db.Settings.list();
     },
@@ -62,7 +64,7 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteSetting(id) {
       return await this.db.Settings.delete(id);
     },
-    
+    //--------------------------------------------------------
     async listInstructions() {
       return await this.db.Instructions.list();
     },
@@ -72,6 +74,7 @@ export const useAppStore = defineStore('useAppStore', {
     async deleteInstruction(id) {
       return await this.db.Instructions.delete(id);
     },
+    //--------------------------------------------------------
  
   }
 })

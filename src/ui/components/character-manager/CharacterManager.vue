@@ -1,6 +1,6 @@
 <script setup>
 //----------------------------------------------------------
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useDialog } from 'src/code/composables/useDialog.js';
 //----------------------------------------------------------
@@ -47,9 +47,9 @@ function submitSelections() {
   emit('finish', [...selectedItems.value]);
 }
 //----------------------------------------------------------
-onMounted(async () => {
+watch(() => appStore.db.dbReady.value, async () => {  
   await listItems();
-})
+}, { immediate: true });
 //----------------------------------------------------------
 </script>
 <template>

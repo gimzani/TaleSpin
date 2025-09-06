@@ -10,13 +10,28 @@ export default class Settings {
       const tx = this.db.transaction('Settings', 'readonly');
       const store = tx.objectStore('Settings');
       store.getAll().addEventListener("success", (evt) => {
-        let charactersList = evt.target.result;
-        charactersList.sort((a, b) => (a.name > b.name) ? 1 : -1);
-        resolve(charactersList);
+        let list = evt.target.result;
+        list.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        resolve(list);
       });
     });
   }
-  
+          
+  async getCollection(ids) {
+    return new Promise((resolve) => {
+      const tx = this.db.transaction('Settings', 'readonly');
+      const store = tx.objectStore('Settings');
+      const collection = [];
+      ids.forEach(id => {
+        store.get(id).addEventListener("success", (evt) => {
+          collection.push(evt.target.result);
+        });
+      });      
+      collection.sort((a, b) => (a.name > b.name) ? 1 : -1);
+      tx.addEventListener('complete', () => resolve(collection));
+    });
+  }
+
   async get(code) {
     return new Promise((resolve) => {
       const tx = this.db.transaction('Settings', 'readonly');

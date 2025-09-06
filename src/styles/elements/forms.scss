@@ -1,5 +1,8 @@
 
+@use "sass:meta";
+@use '../base/_mixins.scss' as _mixins;
 
+// imputs  ===============================================
 select,
 textarea,
 input[type=text] {
@@ -30,6 +33,13 @@ input[type=text] {
 textarea {
   resize: vertical;
   line-height: 1.5rem;
+  @include _mixins.scrollbars;
+}
+
+.word-counter {
+  text-align: right;
+  padding: 0 3px;
+  font-size: 0.7rem;
 }
 
 // buttons ===============================================
@@ -63,6 +73,12 @@ button {
     border-radius: 0.125rem;
   }
 
+  &:disabled {
+    color: #555;
+    border: solid 1px #555;
+    cursor: not-allowed;
+  }
+
 }
 
 .button-group button {
@@ -72,6 +88,7 @@ button {
   }
 }
 
+// global ===============================================
 .w-100,
 .full {
   width: 100%;

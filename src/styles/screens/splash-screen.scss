@@ -17,4 +17,16 @@
   }
 
 
+  .game-list {
+    padding: 10px;
+    .game-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: solid 1px #777;
+      padding: 0.25rem;
+      margin: 0.1rem 0;
+    }
+  }
+
 }

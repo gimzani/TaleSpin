@@ -10,8 +10,7 @@ export default class Tale {
 
   hero = null;
   characters = [];
-  setting = null;
-  sceneBuffer = [];  
+  settings = [];  
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -25,8 +24,7 @@ export default class Tale {
 
     this.hero = options.hero || this.hero;
     this.characters = options.characters || this.characters;
-    this.setting = options.setting || this.setting;
-    this.sceneBuffer = options.sceneBuffer || this.sceneBuffer;
+    this.settings = options.settings || this.settings;
   }
 
 }

@@ -9,9 +9,9 @@ export default class Heroes {
       const tx = this.db.transaction('Heroes', 'readonly');
       const store = tx.objectStore('Heroes');
       store.getAll().addEventListener("success", (evt) => {
-        let heroesList = evt.target.result;
-        heroesList.sort((a, b) => (a.name > b.name) ? 1 : -1);
-        resolve(heroesList);
+        let list = evt.target.result;
+        list.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        resolve(list);
       });
     });
   }

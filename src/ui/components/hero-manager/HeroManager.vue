@@ -1,6 +1,6 @@
 <script setup>
 //----------------------------------------------------------
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useDialog } from 'src/code/composables/useDialog.js';
 //----------------------------------------------------------
@@ -14,7 +14,6 @@ const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
 const selectedItem = ref(null);
-const selectedItems = ref([]);
 const editingItem = ref(false);
 //----------------------------------------------------------
 async function listItems() {
@@ -44,19 +43,20 @@ function editItem(item) {
 }
 //----------------------------------------------------------
 function submitSelections() {
-  emit('finish', [...selectedItems.value]);
+  emit('finish', selectedItem.value);
 }
+
 //----------------------------------------------------------
-onMounted(async () => {
+watch(() => appStore.db.dbReady.value, async () => {  
   await listItems();
-})
+}, { immediate: true });
 //----------------------------------------------------------
 </script>
 <template>
 <div class="hero-manager">
 
 <HeroList 
-  v-model="selectedItems"
+  v-model="selectedItem"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"
@@ -69,7 +69,6 @@ onMounted(async () => {
   @cancel="editingItem=false; selectedItem=null"
   @save="saveItem"
   v-if="editingItem" />
-
 
 </div>
 </template>
