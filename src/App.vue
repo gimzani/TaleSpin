@@ -1,8 +1,10 @@
 <script setup>
 //----------------------------------------------------------
-import { ref, computed, onMounted } from 'vue'
-import TaleSpinDb from 'src/code/db/talespinDb';
+import { onMounted } from 'vue'
+import { SCREENS } from 'src/code/enums.js';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
+import TaleSpinDb from 'src/code/db/talespinDb';
+//----------------------------------------------------------
 import GameFab from './ui/components/GameFab.vue';
 //----------------------------------------------------------
 const taleSpinDb = TaleSpinDb.getInstance();
@@ -16,5 +18,5 @@ onMounted(() => {
 
 <template>
 <component :is="appStore.activeScreen" />
-<GameFab />
+<GameFab v-if="appStore.activeScreenName!==SCREENS.SPLASH" />
 </template>

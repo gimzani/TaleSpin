@@ -1,19 +1,14 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
-import Outfit from './Outfit.js'
 //---------------------------------------------------------
-// The Hero is the protagonist in the story - he is also the 'user'.
-// They have a set of outfits.
-//  - Outfits are collections of clothing items that can be worn  
+// The Scenario class models a single scenario for user selection
 //---------------------------------------------------------
-//---------------------------------------------------------
-export default class Hero {
+export default class Scenario {
 
   id = getKeyCode(6);
   name = null;
-  description = null;
+  text = null;
   genre = null;
-  outfits = [];
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -22,9 +17,8 @@ export default class Hero {
   init(options) {
     this.id = options.id || this.id;
     this.name = options.name || this.name;
-    this.description = options.description || this.description;
+    this.text = options.text || this.text;
     this.genre = options.genre || this.genre;
-    this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
   }
 
 }

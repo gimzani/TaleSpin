@@ -3,8 +3,8 @@ import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
 export default class SceneBuffer {
 
-  id = getKeyCode(6);
-  setting = null;
+  id = getKeyCode(12);
+  description = null;                 // generated description
   header = null;                      // generated instructions and high-level summaries
   messages = [];
 
@@ -14,7 +14,7 @@ export default class SceneBuffer {
 
   init(options) {
     this.id = options.id || this.id;
-    this.setting = options.setting || this.setting;
+    this.description = options.description || this.description;
     this.header = options.header || this.header;
     this.messages = options.messages || this.messages;
   }

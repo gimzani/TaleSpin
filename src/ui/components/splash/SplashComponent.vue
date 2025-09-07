@@ -1,30 +1,43 @@
 <script setup>
 //----------------------------------------------------------
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
+import { SCREENS } from 'src/code/enums.js';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
+import { useContentStore } from 'src/code/stores/useContentStore'; 
 import { useGameStore } from 'src/code/stores/useGameStore'; 
 //----------------------------------------------------------
 import Modal from 'src/ui/components/Modal.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
+const contentStore = useContentStore();
 const gameStore = useGameStore();
 //----------------------------------------------------------
 const loadGameModal = reactive({ show: false });
 const tales = ref([]);
 //----------------------------------------------------------
 function newGame() {
-  appStore.setActiveScreen('ConfigScreen');
+  appStore.setActiveScreen(SCREENS.CONFIG);
 }
 //----------------------------------------------------------
 async function showGameList() {
-  tales.value = await appStore.listSaveGames();
   loadGameModal.show = true;
 }
 //----------------------------------------------------------
 async function loadGame(tale) {
   await gameStore.loadTale(tale.id);
-  appStore.setActiveScreen('PlayScreen');  
+  appStore.setActiveScreen(SCREENS.PLAY);  
 }
+//----------------------------------------------------------
+async function listSavedGames() {
+  tales.value = await appStore.listSaveGames();
+}
+//----------------------------------------------------------
+watch(() => appStore.db.dbReady.value, async (val) => {  
+  if(val) {      
+    await listSavedGames();
+    await contentStore.init();
+  }
+}, { immediate: true });
 //----------------------------------------------------------
 </script>
 <template>
@@ -35,7 +48,7 @@ async function loadGame(tale) {
 
 <div class="splash-screen-buttons">
   <button @click="newGame">New Game</button>
-  <button @click="showGameList">Load Game</button>
+  <button @click="showGameList" :disabled="tales.length===0">Load Game</button>
 </div>
 
 <Modal :show="loadGameModal.show" @close="loadGameModal.show=false" :close-button="true">

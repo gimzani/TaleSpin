@@ -1,64 +1,96 @@
 <script setup>
 //----------------------------------------------------------
-import { reactive, ref, computed } from 'vue'
+import { watch, ref, computed } from 'vue'
+import { SCREENS, STORY_GENRE, AI_VOICE } from 'src/code/enums.js';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useGameStore } from 'src/code/stores/useGameStore'; 
+import { useContentStore } from 'src/code/stores/useContentStore'; 
+//----------------------------------------------------------
+import CharacterInPlay from 'src/code/models/CharacterInPlay.js'
 import Tale from 'src/code/models/Tale.js'
 //----------------------------------------------------------
-import HeroManager from 'src/ui/components/hero-manager/HeroManager.vue'
-import CharacterManager from 'src/ui/components/character-manager/CharacterManager.vue'
-import SettingManager from 'src/ui/components/setting-manager/SettingManager.vue'
 import TextareaField from 'src/ui/components/global/TextareaField.vue';
-import Modal from 'src/ui/components/Modal.vue'
-//----------------------------------------------------------
-const modals = reactive({
-  heroesModal: false,
-  charactersModal: false,
-  settingsModal: false,
-});
+import ModalManager from 'src/ui/components/global/ModalManager.vue';
 //----------------------------------------------------------
 const appStore = useAppStore();
 const gameStore = useGameStore();
+const contentStore = useContentStore();
 const tale = ref(new Tale());
 //----------------------------------------------------------
 const ready = computed(() => (tale.value.hero && tale.value.characters.length>0 && tale.value.settings.length>0 && tale.value.name && tale.value.description) );
 //----------------------------------------------------------
 function cancel() {
-  appStore.setActiveScreen('SplashScreen');
-}
-//----------------------------------------------------------
-async function setHero(heroId) {
-  modals.heroesModal=false;
-  tale.value.hero = await gameStore.getHero(heroId);
-}
-//----------------------------------------------------------
-async function setCharacters(characterIds) { 
-  modals.charactersModal=false;
-  tale.value.characters = await gameStore.getCharacters(characterIds);
-}
-//----------------------------------------------------------
-async function setSettings(selections) { 
-  modals.settingsModal=false;
-  tale.value.settings = await gameStore.getSettings(selections);
+  appStore.setActiveScreen(SCREENS.SPLASH);
 }
 //----------------------------------------------------------
 async function beginTheStory() {
   await gameStore.saveTale(tale.value);
-  appStore.setActiveScreen('PlayScreen');
+  appStore.setActiveScreen(SCREENS.PLAY);
 }
+//----------------------------------------------------------
+watch(() => contentStore.heroesModal, async (val) => {
+  if(!val) {
+    tale.value.hero = await contentStore.pullHeroSelection();
+  }
+});
+//----------------------------------------------------------
+watch(() => contentStore.charactersModal, async (val) => {
+  if(!val) {
+    let characters = await contentStore.pullCharacterSelection();
+    tale.value.characters = characters.map(c => new CharacterInPlay(c));
+  }
+});
+//----------------------------------------------------------
+watch(() => contentStore.settingsModal, async (val) => {
+  if(!val) {
+    tale.value.settings = await contentStore.pullSettingSelection();
+  }
+});
+//----------------------------------------------------------
+watch(() => contentStore.scenariosModal, async (val) => {
+  if(!val) {
+    const scenario = await contentStore.pullScenarioSelection(); 
+    tale.value.description = scenario.text;
+  }
+});
 //----------------------------------------------------------
 </script>
 <template>
 <div class="config-component" v-if="appStore.db.dbReady.value">
 
-  <div>
+  <div class="row gx-2">
+    <div class="col">
+      <label for="taleName">Genre: </label>    
+      <select class="w-100" v-model="tale.genre">
+        <option v-for="g in STORY_GENRE">{{ g }}</option>
+      </select>
+
+    </div>
+    <div class="col">
+      <label for="taleName">Voice: </label>
+      <select class="w-100" v-model="tale.voice">
+        <option v-for="v in AI_VOICE">{{ v }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="mt-3">
     <label for="taleName">New Tale Name: </label>    
     <input id="taleName" type="text" v-model="tale.name" />
   </div>
+  
+  <div class="config-content-selection mt-3 mb-2">
+    <label>Story Thus Far: </label>  
+    <button class="icon" @click="contentStore.scenariosModal=true">
+      <font-awesome-icon icon="plus" />
+    </button>
+  </div>
+  <TextareaField id="storyThusFar" rows="6" v-model="tale.description" :showWordCount="true"></TextareaField>
+  
 
   <div class="config-content-selection">
     <label>The Hero of the Story:</label>
-    <button class="icon" @click="modals.heroesModal=true">
+    <button class="icon" @click="contentStore.heroesModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -68,7 +100,7 @@ async function beginTheStory() {
   
   <div class="config-content-selection">
     <label>Supporting Characters:</label>
-    <button class="icon" @click="modals.charactersModal=true">
+    <button class="icon" @click="contentStore.charactersModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -78,7 +110,7 @@ async function beginTheStory() {
   
   <div class="config-content-selection">
     <label>Story Settings: </label>  
-    <button class="icon" @click="modals.settingsModal=true">
+    <button class="icon" @click="contentStore.settingsModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -87,27 +119,12 @@ async function beginTheStory() {
     <li v-for="s in tale.settings">{{ s.name }}</li>
   </ul>
 
-  <div class="mt-3">
-    <label for="storyThusFar">The Story Thus Far:</label>   
-    <TextareaField id="storyThusFar" rows="6" v-model="tale.description" :showWordCount="true"></TextareaField>
-  </div>
-
   <div class="config-content-buttons">
     <button class="danger me-1" @click="cancel">Cancel</button>
     <button class="success" @click="beginTheStory" :disabled="!ready">Begin</button>
   </div>
-   
-  <Modal container-class="md" :show="modals.heroesModal" @close="modals.heroesModal=false">
-    <HeroManager @finish="setHero" />
-  </Modal>
 
-  <Modal container-class="md" :show="modals.charactersModal" @close="modals.charactersModal=false">
-    <CharacterManager @finish="setCharacters" />
-  </Modal>
-
-  <Modal container-class="md" :show="modals.settingsModal" @close="modals.settingsModal=false">
-    <SettingManager @finish="setSettings" />
-  </Modal>
+  <ModalManager />
 
 </div>
 </template>

@@ -1,18 +1,42 @@
 <script setup>
 //----------------------------------------------------------
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
+import { useContentStore } from 'src/code/stores/useContentStore'; 
 //----------------------------------------------------------
 import ChatOutput from './controls/ChatOutput.vue';
 import ChatInput from './controls/ChatInput.vue';
+import ModalManager from 'src/ui/components/global/ModalManager.vue';
 //----------------------------------------------------------
 const props = defineProps({});
 const emit = defineEmits([]);
+//----------------------------------------------------------
+const contentStore = useContentStore();
+//----------------------------------------------------------
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+watch(() => contentStore.charactersModal, async (val) => {
+  if(!val) {
+    let characters = await contentStore.pullCharacterSelection();
+    console.log('characters', characters)
+  }
+});
+//----------------------------------------------------------
+watch(() => contentStore.settingsModal, async (val) => {
+  if(!val) {
+    let settings = await contentStore.pullSettingSelection();
+    console.log('settings', settings)
+  }
+});
 //----------------------------------------------------------
 </script>
 <template>
 <div class="chat-panel">
   <ChatOutput></ChatOutput>
   <ChatInput></ChatInput>
+
+  <ModalManager />
 </div>
 </template>
 

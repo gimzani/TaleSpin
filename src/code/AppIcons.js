@@ -11,6 +11,7 @@ import {
   faChevronUp,
   faCog,
   faDatabase,
+  faDungeon,
   faEdit,
   faHandPointer,
   faLock,
@@ -20,8 +21,10 @@ import {
   faSave,
   faSearch,
   faSeedling,
+  faTerminal,
   faTimes,
-  faUser
+  faUser,
+  faUsers
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -38,6 +41,7 @@ export default {
       faChevronUp,
       faCog,
       faDatabase,
+      faDungeon,
       faEdit,
       faHandPointer,
       faLock,
@@ -47,8 +51,10 @@ export default {
       faSave,
       faSearch,
       faSeedling,
+      faTerminal,
       faTimes,
-      faUser
+      faUser,
+      faUsers
     );
     Vue.component('font-awesome-icon', FontAwesomeIcon);
   }

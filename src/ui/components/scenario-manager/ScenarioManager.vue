@@ -4,8 +4,8 @@ import { ref, onMounted } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useDialog } from 'src/code/composables/useDialog.js';
 //----------------------------------------------------------
-import InstructionList from './controls/InstructionList.vue'
-import InstructionNewEdit from './controls/InstructionNewEdit.vue'
+import ScenarioList from './controls/ScenarioList.vue'
+import ScenarioNewEdit from './controls/ScenarioNewEdit.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
 const dialog = useDialog();
@@ -14,15 +14,14 @@ const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
 const selectedItem = ref(null);
-const selectedItems = ref([]);
 const editingItem = ref(false);
 //----------------------------------------------------------
 async function listItems() {
-  items.value = await appStore.listInstructions();
+  items.value = await appStore.listScenarios();
 }
 //----------------------------------------------------------
 async function saveItem(item) {
-  await appStore.saveInstruction(item);
+  await appStore.saveScenario(item);
   await listItems();
   editingItem.value = false;
 }
@@ -30,10 +29,10 @@ async function saveItem(item) {
 async function removeItem(item) {
   const confirm = await dialog.confirm({
     title: 'Confirm Delete',
-    text: `Are you sure you want to delete the instruction "${item.name}"? This action cannot be undone.`
+    text: `Are you sure you want to delete the scenario "${item.name}"? This action cannot be undone.`
   });
   if(confirm) {
-    await appStore.deleteInstruction(item.id);
+    await appStore.deleteScenario(item.id);
     await listItems();
   }
 }
@@ -44,7 +43,7 @@ function editItem(item) {
 }
 //----------------------------------------------------------
 function submitSelections() {
-  emit('finish', [...selectedItems.value]);
+  emit('finish', selectedItem.value);
 }
 //----------------------------------------------------------
 onMounted(async () => {
@@ -53,10 +52,10 @@ onMounted(async () => {
 //----------------------------------------------------------
 </script>
 <template>
-<div class="instruction-manager">
+<div class="scenario-manager">
 
-<InstructionList 
-  v-model="selectedItems"
+<ScenarioList 
+  v-model="selectedItem"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"
@@ -64,7 +63,7 @@ onMounted(async () => {
   @finish="submitSelections"
   v-if="!editingItem" />
 
-<InstructionNewEdit 
+<ScenarioNewEdit 
   :item="selectedItem"
   @cancel="editingItem=false; selectedItem=null"
   @save="saveItem"
@@ -74,7 +73,7 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-.instruction-manager {
+.scenario-manager {
   width: 100%;
 }
 </style>

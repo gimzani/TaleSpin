@@ -2,11 +2,12 @@
 //----------------------------------------------------------
 import { ref, watch } from 'vue'
 import TaleSpinDb from 'src/code/db/talespinDb';
-import SettingManager from 'src/ui/components/setting-manager/SettingManager.vue'
+import ModalManager from 'src/ui/components/global/ModalManager.vue'
 //----------------------------------------------------------
 const taleSpinDb = TaleSpinDb.getInstance();
 //----------------------------------------------------------
 const ready = ref(false);
+const modals = ref(null);
 //----------------------------------------------------------
 watch(() => taleSpinDb.dbReady.value, async () => {  
   if(taleSpinDb.dbReady.value===true) {
@@ -19,6 +20,7 @@ watch(() => taleSpinDb.dbReady.value, async () => {
 <div class="developer" v-if="ready">
 
   <div class="dev-portal">
+    <ModalManager ref="modals" />
   </div>
 
 </div>

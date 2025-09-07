@@ -16,7 +16,7 @@ const emit = defineEmits(['finish']);
       <input class="w-100" type="text" placeholder="prompt name" />
     </div>
     <div class="mb-2">
-      <textarea class="w-100" rows="12" placeholder="instructions"></textarea>
+      <textarea class="w-100" rows="12" placeholder="scenario"></textarea>
     </div>
     <div class="text-end">
       <button>Finish</button>

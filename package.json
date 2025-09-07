@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --open",
-    "dev-mobile": "vite --host 192.168.0.230",
+    "dev": "vite --mode development --open",
+    "dev-mobile": "vite --mode development --host 192.168.0.230",
     "build": "vite build",
     "preview": "vite preview"
   },

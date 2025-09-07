@@ -18,3 +18,14 @@ export const INSTRUCTION_ROLE = {
   USER: 'user',
   ASSISTANT: 'assistant'
 }
+
+export const STORY_GENRE = {
+  FANTASY: 'Fantasy World',
+  MODERN: 'Modern World',
+  SCIFI: 'SciFi'
+}
+
+export const AI_VOICE = {
+  FIRST_PERSON: 'First Person Voice',
+  THIRD_PERSON: 'Third Person Voice'
+}

@@ -44,7 +44,7 @@ function editItem(item) {
 }
 //----------------------------------------------------------
 function submitSelections() {
-  emit('finish', [...selectedItems.value]);
+  emit('finish', [...selectedItems.value]);  //todo - clear local?
 }
 //----------------------------------------------------------
 watch(() => appStore.db.dbReady.value, async () => {  

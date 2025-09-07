@@ -4,7 +4,7 @@ import Outfit from './Outfit.js'
 //---------------------------------------------------------
 // The Character in play is the character's current game state
 //---------------------------------------------------------
-export default class Character {
+export default class CharacterInPlay {
 
   id = getKeyCode(6);
   name = null;
@@ -28,11 +28,11 @@ export default class Character {
     this.description = options.description || this.description;
     this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
     
-    assertive = parseFloat(options.assertive) || this.assertive;
-    affinity = parseFloat(options.affinity) || this.affinity;
-    wearing = options.wearing || this.wearing;
-    earshot = !!options.earshot ? options.earshot : this.earshot;
-    active = !!options.active ? options.active : this.active;
+    this.assertive = parseFloat(options.assertive) || this.assertive;
+    this.affinity = parseFloat(options.affinity) || this.affinity;
+    this.wearing = options.wearing || this.wearing;
+    this.earshot = !!options.earshot ? options.earshot : this.earshot;
+    this.active = !!options.active ? options.active : this.active;
     
   }
 

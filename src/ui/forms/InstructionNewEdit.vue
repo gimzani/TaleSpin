@@ -1,14 +1,14 @@
 <script setup>
 //----------------------------------------------------------
 import { ref, computed, watch } from 'vue'
-import Instruction from '../../code/models/Instruction.js'
+import Scenario from '../../code/models/Scenario.js'
 //----------------------------------------------------------
 const props = defineProps({
   modelValue: { type: Object } 
 });
 const emit = defineEmits(['cancel', 'save']);
 //----------------------------------------------------------
-const selectedItem = ref(new Instruction());
+const selectedItem = ref(new Scenario());
 //----------------------------------------------------------
 const mode = computed(() => props.modelValue ? 'Edit' : 'New');
 //----------------------------------------------------------
@@ -22,7 +22,7 @@ function save() {
 //----------------------------------------------------------
 watch(() => props.modelValue, (val) => {
   if(val) {
-    selectedItem.value = new Instruction(val);
+    selectedItem.value = new Scenario(val);
   }  
 }, { immediate: true });
 //----------------------------------------------------------
@@ -33,7 +33,7 @@ watch(() => props.modelValue, (val) => {
   <div class="content-panel-frame">
 
     <div class="section-header">
-      <div class="section-title">{{ mode }} Instruction</div>
+      <div class="section-title">{{ mode }} Scenario</div>
     </div>
 
     <div class="content-panel-form">

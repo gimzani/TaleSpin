@@ -12,6 +12,7 @@ export const useAppStore = defineStore('useAppStore', {
   state: () => ({    
     screenList: Object.keys(screens),
     activeScreenName: SCREENS.SPLASH,
+    debugMode: true
   }),
   getters: { 
     activeScreen: (state) => screens[state.activeScreenName]
@@ -65,14 +66,14 @@ export const useAppStore = defineStore('useAppStore', {
       return await this.db.Settings.delete(id);
     },
     //--------------------------------------------------------
-    async listInstructions() {
-      return await this.db.Instructions.list();
+    async listScenarios() {
+      return await this.db.Scenarios.list();
     },
-    async saveInstruction(item) {
-      return await this.db.Instructions.put(item);
+    async saveScenario(item) {
+      return await this.db.Scenarios.put(item);
     },
-    async deleteInstruction(id) {
-      return await this.db.Instructions.delete(id);
+    async deleteScenario(id) {
+      return await this.db.Scenarios.delete(id);
     },
     //--------------------------------------------------------
  

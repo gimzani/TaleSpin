@@ -34,6 +34,7 @@ textarea {
   resize: vertical;
   line-height: 1.5rem;
   @include _mixins.scrollbars;
+  width: 100%;
 }
 
 .word-counter {

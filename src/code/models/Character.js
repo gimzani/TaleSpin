@@ -12,7 +12,7 @@ export default class Character {
   id = getKeyCode(6);
   name = null;
   description = null;
-  category = null;
+  genre = null;
   memories = [];        // important information to remember
   outfits = [];
 
@@ -24,7 +24,7 @@ export default class Character {
     this.id = options.id || this.id;
     this.name = options.name || this.name;
     this.description = options.description || this.description;
-    this.category = options.category || this.category;
+    this.genre = options.genre || this.genre;
     this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
   }
 

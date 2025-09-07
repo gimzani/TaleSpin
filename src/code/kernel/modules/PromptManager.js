@@ -1,7 +1,20 @@
 
 
 async function buildStoryPrompt() {
-  // assemble system prompts and story fragments into a single prompt
+// assemble system prompts and story fragments into a single prompt
+
+  // get main system prompt
+  
+  // add Histories - (Act, Chapter, Scene)
+
+  // add setting
+
+  // add hero
+
+  // add character
+
+  // add last N messages
+
 }
 
 

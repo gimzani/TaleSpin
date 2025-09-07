@@ -1,7 +1,7 @@
 <script setup>
 //----------------------------------------------------------
 import { ref, computed, watch } from 'vue'
-import Instruction from 'src/code/models/Instruction.js'
+import Scenario from 'src/code/models/Scenario.js'
 //----------------------------------------------------------
 import TextareaField from 'src/ui/components/global/TextareaField.vue';
 //----------------------------------------------------------
@@ -10,13 +10,13 @@ const props = defineProps({
 });
 const emit = defineEmits(['cancel', 'save']);
 //----------------------------------------------------------
-const selectedItem = ref(new Instruction());
+const selectedItem = ref(new Scenario());
 //----------------------------------------------------------
 const mode = computed(() => props.item ? 'Edit' : 'New');
 //----------------------------------------------------------
 watch(() => props.item, (val) => {
   if(val) {
-    selectedItem.value = new Instruction(val);
+    selectedItem.value = new Scenario(val);
   }  
 }, { immediate: true });
 //----------------------------------------------------------
@@ -26,7 +26,7 @@ watch(() => props.item, (val) => {
 <div class="component-form-frame">
 
   <div class="section-header">
-    <div class="section-title">{{ mode }} Instruction</div>
+    <div class="section-title">{{ mode }} Scenario</div>
   </div>
 
   <div class="component-form">

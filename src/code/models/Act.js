@@ -1,26 +1,19 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
-// The Instruction class models a single instruction for an AI system message
+// The Act class models a summary of a set of chapters
 //---------------------------------------------------------
-export default class Instruction {
+export default class Act {
 
-  id = getKeyCode(6);
-  name = null;
+  id = getKeyCode(8);
   text = null;
-  type = null;
-  sortOrder = 0;
-
   constructor(options) {
     if(options) { this.init(options); }
   } 
 
   init(options) {
     this.id = options.id || this.id;
-    this.name = options.name || this.name;
     this.text = options.text || this.text;
-    this.type = options.type || this.type;
-    this.sortOrder = parseInt(options.sortOrder) || this.sortOrder;
   }
 
 }
