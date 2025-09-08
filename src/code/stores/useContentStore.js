@@ -1,9 +1,6 @@
 //------------------------------------------------------------------
 import { defineStore } from 'pinia';
 //------------------------------------------------------------------
-const sysFile = import.meta.env.VITE_MAIN_SYSTEM_FILE;
-const sumFile = import.meta.env.VITE_MAIN_SUMMARY_FILE;
-//------------------------------------------------------------------
 export const useContentStore = defineStore('useContentStore', {
   state: () => ({
 
@@ -23,12 +20,6 @@ export const useContentStore = defineStore('useContentStore', {
   }),
   getters: {  },
   actions: { 
-
-
-    async init() {
-      this.mainSystemInstruction = await fetch(`/system/${sysFile}`).then(res => res.text());
-      this.mainSummaryInstruction = await fetch(`/system/${sumFile}`).then(res => res.text());
-    },
 
     async pullHeroSelection() {
       let id = this.heroSelection;

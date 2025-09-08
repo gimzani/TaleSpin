@@ -1,0 +1,82 @@
+//------------------------------------------------------------------
+const sysFile = import.meta.env.VITE_MAIN_SYSTEM_FILE;
+const sumFile = import.meta.env.VITE_MAIN_SUMMARY_FILE;
+//------------------------------------------------------------------
+import Prompt from 'src/code/models/Prompt.js';
+//------------------------------------------------------------------
+export default class AiPrompt {
+    
+  mainSystemInstruction = null;
+  mainSummaryInstruction = null;
+
+  constructor() {
+
+  }
+
+
+  async init() {
+    this.mainSystemInstruction = await fetch(`/system/${sysFile}`).then(res => res.text());
+    this.mainSummaryInstruction = await fetch(`/system/${sumFile}`).then(res => res.text());
+  }
+
+  getMainSystemPrompt() {
+    return new Prompt({
+      role: "system",
+      content: this.mainSystemInstruction
+    });
+  }
+
+  getSummarySystemPrompt() {
+    return new Prompt({
+      role: "system",
+      content: this.mainSummaryInstruction
+    });
+  }
+
+  // =============================>  start here!!!
+
+  async buildStoryPrompt() {
+  // assemble system prompts and story fragments into a single prompt
+
+    // get main system prompt
+    
+    // add Histories - (Act, Chapter, Scene)
+
+    // add setting
+
+    // add hero
+
+    // add character
+
+    // add last N messages
+
+  }
+
+
+  async buildSummaryRequestPrompt() {
+    // assemble last X history items and request a summary
+  }
+
+
+  async buildReasoningPrompt() {
+    // assemble last x messages and request a reasoned response - (how does the character feel about..., what would the character do in this situation...)
+  }
+
+
+  async getLastN_MessageBatch() {
+    // assemble last X messages
+  }
+
+  async getLastN_HistoryBatch() {
+    // assemble last X messages
+  }
+
+
+
+
+
+
+
+
+
+}

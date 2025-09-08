@@ -1,15 +1,21 @@
 <script setup>
 //----------------------------------------------------------
 import { ref } from 'vue'
+import { useGameStore } from 'src/code/stores/useGameStore'; 
 //----------------------------------------------------------
 const props = defineProps({});
 const emit = defineEmits([]);
+//----------------------------------------------------------
+const gameStore = useGameStore();
 //----------------------------------------------------------
 </script>
 <template>
 <div class="chat-output">
   <div class="output-window" contenteditable="true">
-    OUTPUT
+    
+    
+    output blocks...
+
   </div>
 </div>
 </template>

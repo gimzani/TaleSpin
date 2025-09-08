@@ -3,13 +3,11 @@
 import { ref, reactive, watch } from 'vue'
 import { SCREENS } from 'src/code/enums.js';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
-import { useContentStore } from 'src/code/stores/useContentStore'; 
 import { useGameStore } from 'src/code/stores/useGameStore'; 
 //----------------------------------------------------------
 import Modal from 'src/ui/components/Modal.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
-const contentStore = useContentStore();
 const gameStore = useGameStore();
 //----------------------------------------------------------
 const loadGameModal = reactive({ show: false });
@@ -35,7 +33,6 @@ async function listSavedGames() {
 watch(() => appStore.db.dbReady.value, async (val) => {  
   if(val) {      
     await listSavedGames();
-    await contentStore.init();
   }
 }, { immediate: true });
 //----------------------------------------------------------

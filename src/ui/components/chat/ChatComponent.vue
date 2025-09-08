@@ -1,6 +1,7 @@
 <script setup>
 //----------------------------------------------------------
-import { ref,watch } from 'vue'
+import { onMounted, ref,watch } from 'vue'
+import { useGameStore } from 'src/code/stores/useGameStore'; 
 import { useContentStore } from 'src/code/stores/useContentStore'; 
 //----------------------------------------------------------
 import ChatOutput from './controls/ChatOutput.vue';
@@ -10,6 +11,7 @@ import ModalManager from 'src/ui/components/global/ModalManager.vue';
 const props = defineProps({});
 const emit = defineEmits([]);
 //----------------------------------------------------------
+const gameStore = useGameStore();
 const contentStore = useContentStore();
 //----------------------------------------------------------
 //----------------------------------------------------------
@@ -29,6 +31,10 @@ watch(() => contentStore.settingsModal, async (val) => {
     console.log('settings', settings)
   }
 });
+//----------------------------------------------------------
+onMounted(async () => {
+  await gameStore.initGameState();
+})
 //----------------------------------------------------------
 </script>
 <template>

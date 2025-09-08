@@ -1,16 +1,23 @@
 //------------------------------------------------------------------
 import { defineStore } from 'pinia';
+import AiPrompt from '../ai/AiPrompt.js';
+//------------------------------------------------------------------
 import Tale from '../models/Tale.js';
+//------------------------------------------------------------------
+
 //------------------------------------------------------------------
 export const useGameStore = defineStore('useGameStore', {
   state: () => ({
+
+    ai: null,    
+
     tale: null,
     gameState: null
   }),
   getters: {  
 
   },
-  actions: {  
+  actions: {
     //--------------------------------------------------------
     async saveTale(tale) {
       this.tale = new Tale(tale);
@@ -23,17 +30,35 @@ export const useGameStore = defineStore('useGameStore', {
       this.tale = new Tale(tale);
     },
     //--------------------------------------------------------
-    async getHero(id) {
-      return await this.db.Heroes.get(id);
-    },
     //--------------------------------------------------------
-    async getCharacters(ids) {
-      return await this.db.Characters.getCollection(ids);
-    },
-    //--------------------------------------------------------
-    async getSettings(ids) {
-      return await this.db.Settings.getCollection(ids);
-    }
+    async initGameState() {      
 
+      this.ai = new AiPrompt();
+      await this.ai.init();
+
+      let systemPrompt = this.ai.getMainSystemPrompt();
+
+      console.log('systemPrompt?', systemPrompt)
+
+
+      //START HERE!
+
+
+
+    },
+    //--------------------------------------------------------
+
+
+    async getNewScene() {},
+
+    async getActSummary() {},
+
+    async getChapterSummary() {},
+
+
+    async checkAffinity() {},
+
+
+    
   }
 })
