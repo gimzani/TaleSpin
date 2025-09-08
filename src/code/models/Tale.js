@@ -21,6 +21,8 @@ export default class Tale {
   chapter = null;       // current chapter
   scene = null;         // current scene
 
+  
+
   constructor(options) {
     if(options) { this.init(options); }
   } 

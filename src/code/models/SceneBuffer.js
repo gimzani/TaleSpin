@@ -6,7 +6,10 @@ export default class SceneBuffer {
   id = getKeyCode(12);
   description = null;                 // generated description
   header = null;                      // generated instructions and high-level summaries
-  messages = [];
+  messages = [];                      // user, assistant, summary
+
+  summaryStretch = 0;                 // incrementing number. When it reaches the threshold, 
+                                      // a summary is created and the number reset.
 
   constructor(options) {
     if(options) { this.init(options); }

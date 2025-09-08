@@ -4,15 +4,16 @@ import AiPrompt from '../ai/AiPrompt.js';
 //------------------------------------------------------------------
 import Tale from '../models/Tale.js';
 //------------------------------------------------------------------
-
+const BUFFER_LIMIT = 250;  // number of messages allowed in messageBuffer
 //------------------------------------------------------------------
 export const useGameStore = defineStore('useGameStore', {
   state: () => ({
 
-    ai: null,    
-
+    ai: null,
     tale: null,
-    gameState: null
+
+    messageBuffer: []   // rolling buffer - (individual messages get copied to sceneBuffer)
+    
   }),
   getters: {  
 

@@ -42,7 +42,7 @@ export default class AiPrompt {
     
     // add Histories - (Act, Chapter, Scene)
 
-    // add setting
+    // add Location
 
     // add hero
 

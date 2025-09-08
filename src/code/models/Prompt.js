@@ -2,16 +2,16 @@
 //---------------------------------------------------------
 export default class Prompt {
 
-  role = null;
-  content = null;
+  model = null;
+  messages = [];
 
   constructor(options) {
     if(options) { this.init(options); }
   } 
 
   init(options) {
-    this.role = options.role || this.role;
-    this.content = options.content || this.content;
+    this.model = options.model || this.model;
+    this.messages = options.messages || this.messages;
   }
 
 }
