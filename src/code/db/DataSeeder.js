@@ -1,7 +1,7 @@
 
 import characters from '../_dummydata/charactersList.js';
 import heroes from '../_dummydata/heroesList.js';
-import settings from '../_dummydata/settingsList.js';
+import locations from '../_dummydata/locationsList.js';
 import scenarios from '../_dummydata/scenariosList.js';
 
 
@@ -15,8 +15,8 @@ export async function seedData(db) {
       await db.Heroes.put(hero);
     }
 
-    for(const setting of settings) {
-      await db.Settings.put(setting);
+    for(const location of locations) {
+      await db.Locations.put(location);
     }
 
     for(const scenario of scenarios) {

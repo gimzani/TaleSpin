@@ -5,8 +5,7 @@ import dbConfig from './db.config.js'
 import Characters from './modules/Characters.js'
 import Heroes from './modules/Heroes.js'
 import Scenarios from './modules/Scenarios.js'
-import Scenes from './modules/Scenes.js'
-import Settings from './modules/Settings.js'
+import Locations from './modules/Locations.js'
 import Tales from './modules/Tales.js'
 //-----------------------------------------------------------------------------
 export default class TaleSpinDb {
@@ -16,8 +15,7 @@ export default class TaleSpinDb {
   Characters = null;
   Heroes = null;
   Scenarios = null;
-  Scenes = null;
-  Settings = null;
+  Locations = null;
   Tales = null;
   //-----------------------------------
   errorMessage = null;
@@ -72,8 +70,7 @@ export default class TaleSpinDb {
     this.Characters = new Characters(this.db);
     this.Heroes = new Heroes(this.db);
     this.Scenarios = new Scenarios(this.db);
-    this.Scenes = new Scenes(this.db);
-    this.Settings = new Settings(this.db);
+    this.Locations = new Locations(this.db);
     this.Tales = new Tales(this.db);
   }
   //-----------------------------------

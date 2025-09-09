@@ -4,8 +4,8 @@ import { ref, watch } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useDialog } from 'src/code/composables/useDialog.js';
 //----------------------------------------------------------
-import SettingList from './controls/SettingList.vue'
-import SettingNewEdit from './controls/SettingNewEdit.vue'
+import LocationList from './controls/LocationList.vue'
+import LocationNewEdit from './controls/LocationNewEdit.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
 const dialog = useDialog();
@@ -18,11 +18,11 @@ const selectedItems = ref([]);
 const editingItem = ref(false);
 //----------------------------------------------------------
 async function listItems() {
-  items.value = await appStore.listSettings();
+  items.value = await appStore.listLocations();
 }
 //----------------------------------------------------------
 async function saveItem(item) {
-  await appStore.saveSetting(item);
+  await appStore.saveLocation(item);
   await listItems();
   editingItem.value = false;
 }
@@ -30,10 +30,10 @@ async function saveItem(item) {
 async function removeItem(item) {
   const confirm = await dialog.confirm({
     title: 'Confirm Delete',
-    text: `Are you sure you want to delete the setting "${item.name}"? This action cannot be undone.`
+    text: `Are you sure you want to delete the location "${item.name}"? This action cannot be undone.`
   });
   if(confirm) {
-    await appStore.deleteSetting(item.id);
+    await appStore.deleteLocation(item.id);
     await listItems();
   }
 }
@@ -53,9 +53,9 @@ watch(() => appStore.db.dbReady.value, async () => {
 //----------------------------------------------------------
 </script>
 <template>
-<div class="setting-manager">
+<div class="location-manager">
 
-<SettingList 
+<LocationList 
   v-model="selectedItems"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
@@ -64,7 +64,7 @@ watch(() => appStore.db.dbReady.value, async () => {
   @finish="submitSelections"
   v-if="!editingItem" />
 
-<SettingNewEdit 
+<LocationNewEdit 
   :item="selectedItem"
   @cancel="editingItem=false; selectedItem=null"
   @save="saveItem"
@@ -74,7 +74,7 @@ watch(() => appStore.db.dbReady.value, async () => {
 </template>
 
 <style scoped lang="scss">
-.setting-manager {
+.location-manager {
   min-width: 500px;
   max-width: 700px;
   width: 100%;

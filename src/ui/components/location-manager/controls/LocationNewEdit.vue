@@ -1,7 +1,7 @@
 <script setup>
 //----------------------------------------------------------
 import { ref, computed, watch } from 'vue'
-import Setting from 'src/code/models/Setting.js'
+import Location from 'src/code/models/Location.js'
 //----------------------------------------------------------
 import TextareaField from 'src/ui/components/global/TextareaField.vue';
 //----------------------------------------------------------
@@ -10,13 +10,13 @@ const props = defineProps({
 });
 const emit = defineEmits(['cancel', 'save']);
 //----------------------------------------------------------
-const selectedItem = ref(new Setting());
+const selectedItem = ref(new Location());
 //----------------------------------------------------------
 const mode = computed(() => props.item ? 'Edit' : 'New');
 //----------------------------------------------------------
 watch(() => props.item, (val) => {
   if(val) {
-    selectedItem.value = new Setting(val);
+    selectedItem.value = new Location(val);
   }  
 }, { immediate: true });
 //----------------------------------------------------------
@@ -26,7 +26,7 @@ watch(() => props.item, (val) => {
 <div class="component-form-frame">
 
   <div class="section-header">
-    <div class="section-title">{{ mode }} Setting</div>
+    <div class="section-title">{{ mode }} Location</div>
   </div>
 
   <div class="component-form">

@@ -25,10 +25,10 @@ watch(() => contentStore.charactersModal, async (val) => {
   }
 });
 //----------------------------------------------------------
-watch(() => contentStore.settingsModal, async (val) => {
+watch(() => contentStore.locationsModal, async (val) => {
   if(!val) {
-    let settings = await contentStore.pullSettingSelection();
-    console.log('settings', settings)
+    let locations = await contentStore.pullLocationSelection();
+    console.log('locations', locations)
   }
 });
 //----------------------------------------------------------

@@ -17,7 +17,7 @@ const gameStore = useGameStore();
 const contentStore = useContentStore();
 const tale = ref(new Tale());
 //----------------------------------------------------------
-const ready = computed(() => (tale.value.hero && tale.value.characters.length>0 && tale.value.settings.length>0 && tale.value.name && tale.value.description) );
+const ready = computed(() => (tale.value.hero && tale.value.characters.length>0 && tale.value.locations.length>0 && tale.value.name && tale.value.description) );
 //----------------------------------------------------------
 function cancel() {
   appStore.setActiveScreen(SCREENS.SPLASH);
@@ -41,9 +41,9 @@ watch(() => contentStore.charactersModal, async (val) => {
   }
 });
 //----------------------------------------------------------
-watch(() => contentStore.settingsModal, async (val) => {
+watch(() => contentStore.locationsModal, async (val) => {
   if(!val) {
-    tale.value.settings = await contentStore.pullSettingSelection();
+    tale.value.locations = await contentStore.pullLocationSelection();
   }
 });
 //----------------------------------------------------------
@@ -109,14 +109,14 @@ watch(() => contentStore.scenariosModal, async (val) => {
   </ul>
   
   <div class="config-content-selection">
-    <label>Story Settings: </label>  
-    <button class="icon" @click="contentStore.settingsModal=true">
+    <label>Story Locations: </label>  
+    <button class="icon" @click="contentStore.locationsModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
   
-  <ul class="config-content-items" v-if="tale.settings">
-    <li v-for="s in tale.settings">{{ s.name }}</li>
+  <ul class="config-content-items" v-if="tale.locations">
+    <li v-for="s in tale.locations">{{ s.name }}</li>
   </ul>
 
   <div class="config-content-buttons">

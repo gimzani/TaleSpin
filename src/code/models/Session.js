@@ -1,12 +1,11 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
+import MemoryBank from './MemoryBank.js'
 //---------------------------------------------------------
-export default class Setting {
+export default class Session {
 
   id = getKeyCode(6);
-  name = null;
-  description = null;
-  genre = null;
+  memoryBank = new MemoryBank();
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -14,9 +13,7 @@ export default class Setting {
 
   init(options) {
     this.id = options.id || this.id;
-    this.name = options.name || this.name;
-    this.genre = options.genre || this.genre;
-    this.description = options.description || this.description;
+    this.memoryBank = options.memoryBank || this.memoryBank;
   }
 
 }

@@ -38,11 +38,11 @@ watch(() => appStore.activeScreenName, (val) => {
     <button @click="contentStore.heroesModal=true" title="open heroes manager">
       <font-awesome-icon icon="fa-solid fa-user" /> Hero
     </button>
-    <button @click="contentStore.charactersModal=true" title="open settings manager">
+    <button @click="contentStore.charactersModal=true" title="open locations manager">
       <font-awesome-icon icon="fa-solid fa-users" /> Characters
     </button>
-    <button @click="contentStore.settingsModal=true" title="open settings manager">
-      <font-awesome-icon icon="fa-solid fa-dungeon" /> Settings
+    <button @click="contentStore.locationsModal=true" title="open locations manager">
+      <font-awesome-icon icon="fa-solid fa-dungeon" /> Locations
     </button>
     <button @click="contentStore.scenariosModal=true" title="open scenarios manager">
       <font-awesome-icon icon="fa-solid fa-terminal" /> Scenarios

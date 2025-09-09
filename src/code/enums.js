@@ -26,6 +26,6 @@ export const STORY_GENRE = {
 }
 
 export const AI_VOICE = {
-  FIRST_PERSON: 'First Person Voice',
+  SECOND_PERSON: 'Second Person Voice',
   THIRD_PERSON: 'Third Person Voice'
 }

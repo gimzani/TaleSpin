@@ -1,19 +1,22 @@
 //---------------------------------------------------------
 import { getKeyCode } from 'src/code/codegen.js'
 //---------------------------------------------------------
-// The Act class models a summary of a set of chapters
-//---------------------------------------------------------
-export default class Act {
+export default class Location {
 
-  id = getKeyCode(8);
-  text = null;
+  id = getKeyCode(6);
+  name = null;
+  description = null;
+  genre = null;
+
   constructor(options) {
     if(options) { this.init(options); }
   } 
 
   init(options) {
     this.id = options.id || this.id;
-    this.text = options.text || this.text;
+    this.name = options.name || this.name;
+    this.genre = options.genre || this.genre;
+    this.description = options.description || this.description;
   }
 
 }

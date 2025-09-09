@@ -56,14 +56,14 @@ export const useAppStore = defineStore('useAppStore', {
       return await this.db.Heroes.delete(id);
     },
     //--------------------------------------------------------
-    async listSettings() {
-      return await this.db.Settings.list();
+    async listLocations() {
+      return await this.db.Locations.list();
     },
-    async saveSetting(item) {
-      return await this.db.Settings.put(item);
+    async saveLocation(item) {
+      return await this.db.Locations.put(item);
     },
-    async deleteSetting(id) {
-      return await this.db.Settings.delete(id);
+    async deleteLocation(id) {
+      return await this.db.Locations.delete(id);
     },
     //--------------------------------------------------------
     async listScenarios() {

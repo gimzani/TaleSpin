@@ -9,12 +9,12 @@ export const useContentStore = defineStore('useContentStore', {
 
     heroesModal: false,
     charactersModal: false,
-    settingsModal: false,
+    locationsModal: false,
     scenariosModal: false,
 
     heroSelection: null,
     characterSelection: [],
-    settingSelection: [],
+    locationSelection: [],
     scenarioSelection: null,
 
   }),
@@ -33,10 +33,10 @@ export const useContentStore = defineStore('useContentStore', {
       return await this.db.Characters.getCollection(ids);
     },
 
-    async pullSettingSelection() {
-      let ids = [...this.settingSelection];
-      this.settingSelection = [];
-      return await this.db.Settings.getCollection(ids);
+    async pullLocationSelection() {
+      let ids = [...this.locationSelection];
+      this.locationSelection = [];
+      return await this.db.Locations.getCollection(ids);
     },
 
     async pullScenarioSelection() {

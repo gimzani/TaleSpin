@@ -10,7 +10,7 @@ const contentStore = useContentStore();
 //----------------------------------------------------------
 import HeroManager from 'src/ui/components/hero-manager/HeroManager.vue'
 import CharacterManager from 'src/ui/components/character-manager/CharacterManager.vue'
-import SettingManager from 'src/ui/components/setting-manager/SettingManager.vue'
+import LocationManager from 'src/ui/components/location-manager/LocationManager.vue'
 import ScenarioManager from 'src/ui/components/scenario-manager/ScenarioManager.vue'
 import Modal from 'src/ui/components/Modal.vue'
 //----------------------------------------------------------
@@ -24,9 +24,9 @@ async function setCharacters(characterIds) {
   contentStore.charactersModal=false;
 }
 //----------------------------------------------------------
-async function setSettings(settingsIds) { 
-  contentStore.settingSelection = settingsIds;
-  contentStore.settingsModal=false;
+async function setLocations(locationsIds) { 
+  contentStore.locationSelection = locationsIds;
+  contentStore.locationsModal=false;
 }
 //----------------------------------------------------------
 async function setScenarios(scenarioId) { 
@@ -46,8 +46,8 @@ async function setScenarios(scenarioId) {
     <CharacterManager @finish="setCharacters" />
   </Modal>
 
-  <Modal container-class="md" :show="contentStore.settingsModal" @close="contentStore.settingsModal=false">
-    <SettingManager @finish="setSettings" />
+  <Modal container-class="md" :show="contentStore.locationsModal" @close="contentStore.locationsModal=false">
+    <LocationManager @finish="setLocations" />
   </Modal>
 
   <Modal container-class="md" :show="contentStore.scenariosModal" @close="contentStore.scenariosModal=false">

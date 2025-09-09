@@ -2,7 +2,7 @@
 //----------------------------------------------------------
 import { ref, watch } from 'vue'
 //----------------------------------------------------------
-import SettingListing from './SettingListing.vue';
+import LocationListing from './LocationListing.vue';
 //----------------------------------------------------------
 const props = defineProps({
   modelValue: { type: Array },
@@ -31,7 +31,7 @@ watch(() => props.modelValue, (newVal) => {
 
   <div class="component-list-header">
     <div class="component-list-header-title">
-      Settings
+      Locations
     </div>   
     <div>
       <button class="success" @click="$emit('new-item')">
@@ -41,7 +41,7 @@ watch(() => props.modelValue, (newVal) => {
   </div>  
 
   <div class="component-list-items">
-    <SettingListing 
+    <LocationListing 
       v-for="item in items" 
       :key="item.id" 
       :item="item" 

@@ -1,5 +1,6 @@
 //------------------------------------------------------------------
 import { defineStore } from 'pinia';
+import ollama from 'ollama/browser';
 import AiPrompt from '../ai/AiPrompt.js';
 //------------------------------------------------------------------
 import Tale from '../models/Tale.js';

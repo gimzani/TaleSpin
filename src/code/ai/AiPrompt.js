@@ -5,9 +5,16 @@ const sumFile = import.meta.env.VITE_MAIN_SUMMARY_FILE;
 import Prompt from 'src/code/models/Prompt.js';
 //------------------------------------------------------------------
 export default class AiPrompt {
-    
-  mainSystemInstruction = null;
-  mainSummaryInstruction = null;
+
+  modelName = 'storyteller';
+
+  systemMessages = {
+    main: { role: "system", content: null },
+    summary: { role: "system", content: null },
+    story: { role: "system", content: null },
+    character: { role: "system", content: null },
+    location: { role: "system", content: null }
+  }
 
   constructor() {
 
@@ -15,13 +22,13 @@ export default class AiPrompt {
 
 
   async init() {
-    this.mainSystemInstruction = await fetch(`/system/${sysFile}`).then(res => res.text());
-    this.mainSummaryInstruction = await fetch(`/system/${sumFile}`).then(res => res.text());
+    this.systemMessages.main.content = await fetch(`/system/${sysFile}`).then(res => res.text());
+    this.systemMessages.summary.content = await fetch(`/system/${sumFile}`).then(res => res.text());
   }
 
   getMainSystemPrompt() {
     return new Prompt({
-      role: "system",
+      model: this.modelName,
       content: this.mainSystemInstruction
     });
   }
@@ -35,13 +42,11 @@ export default class AiPrompt {
 
   // =============================>  start here!!!
 
-  async buildStoryPrompt() {
+  async buildStoryPrompt(tale) {
   // assemble system prompts and story fragments into a single prompt
 
     // get main system prompt
     
-    // add Histories - (Act, Chapter, Scene)
-
     // add Location
 
     // add hero
