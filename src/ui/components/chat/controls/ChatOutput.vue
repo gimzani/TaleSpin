@@ -12,10 +12,9 @@ const gameStore = useGameStore();
 <template>
 <div class="chat-output">
   <div class="output-window" contenteditable="true">
-    
-    
-    output blocks...
-
+    <div class="chat-exchange" v-for="c in gameStore.rollingChatLog">
+      {{ c.content }}
+    </div>
   </div>
 </div>
 </template>
@@ -32,6 +31,10 @@ const gameStore = useGameStore();
     overflow-y: auto;
     padding: 10px;
     height: 100%;
+
+    .chat-exchange {
+      margin:15px 5px;
+    }
   }
 
 }

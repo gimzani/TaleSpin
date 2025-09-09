@@ -1,9 +1,11 @@
 
 //---------------------------------------------------------
-// Memories are used by the scene buffer to detail game objects
+// Memories are used by the MemoryBank to detail game objects
 //---------------------------------------------------------
 export default class Memory {
 
+  name = null;
+  description = null;
   digest = null;
   expanded = null;
   rawRefs = [];
@@ -14,6 +16,8 @@ export default class Memory {
   } 
 
   init(options) {
+    this.name = options.name || this.name;
+    this.description = options.description || this.description;
     this.digest = options.digest || this.digest;
     this.expanded = options.expanded || this.expanded;
     this.rawRefs = options.rawRefs || this.rawRefs;

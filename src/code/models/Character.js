@@ -13,8 +13,16 @@ export default class Character {
   name = null;
   description = null;
   genre = null;
+
   memories = [];        // important information to remember
+
   outfits = [];
+  wearing = null;
+  
+  earshot = false;
+  active = false;
+  assertive = 0.5;
+  affinity = 0.5;
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -25,7 +33,17 @@ export default class Character {
     this.name = options.name || this.name;
     this.description = options.description || this.description;
     this.genre = options.genre || this.genre;
+    
+    this.memories = options.memories || this.memories;
+
     this.outfits = options.outfits ? options.outfits.map(o => new Outfit(o)) : this.outfits;
+    this.wearing = options.wearing || this.wearing;
+    
+    this.earshot = options.earshot || this.earshot;
+    this.active = options.active || this.active;    
+    this.assertive = options.assertive || this.assertive;
+    this.affinity = options.affinity || this.affinity;
+
   }
 
 }

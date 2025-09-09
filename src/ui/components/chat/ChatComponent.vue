@@ -32,9 +32,11 @@ watch(() => contentStore.locationsModal, async (val) => {
   }
 });
 //----------------------------------------------------------
-onMounted(async () => {
-  await gameStore.initGameState();
-})
+watch(() => gameStore.session, async (val) => {
+  if(val) {
+    await gameStore.initGameState();    
+  }
+}, { immediate: true });
 //----------------------------------------------------------
 </script>
 <template>

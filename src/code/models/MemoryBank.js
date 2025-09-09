@@ -6,6 +6,7 @@ import Memory from './Memory.js'
 export default class MemoryBank {
 
   global = new Memory();
+  hero = new Memory();
   characters = {};
   locations = {};  
 
@@ -17,6 +18,7 @@ export default class MemoryBank {
 
   init(options) {
     this.global = options.global || this.global;
+    this.hero = options.hero || this.hero;
     this.characters = options.characters || this.characters;
     this.locations = options.locations || this.locations;
     

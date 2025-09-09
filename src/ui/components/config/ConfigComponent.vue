@@ -6,7 +6,7 @@ import { useAppStore } from 'src/code/stores/useAppStore';
 import { useGameStore } from 'src/code/stores/useGameStore'; 
 import { useContentStore } from 'src/code/stores/useContentStore'; 
 //----------------------------------------------------------
-import CharacterInPlay from 'src/code/models/CharacterInPlay.js'
+import Character from 'src/code/models/Character.js'
 import Tale from 'src/code/models/Tale.js'
 //----------------------------------------------------------
 import TextareaField from 'src/ui/components/global/TextareaField.vue';
@@ -24,7 +24,7 @@ function cancel() {
 }
 //----------------------------------------------------------
 async function beginTheStory() {
-  await gameStore.saveTale(tale.value);
+  await gameStore.newTale(tale.value);
   appStore.setActiveScreen(SCREENS.PLAY);
 }
 //----------------------------------------------------------
@@ -37,7 +37,7 @@ watch(() => contentStore.heroesModal, async (val) => {
 watch(() => contentStore.charactersModal, async (val) => {
   if(!val) {
     let characters = await contentStore.pullCharacterSelection();
-    tale.value.characters = characters.map(c => new CharacterInPlay(c));
+    tale.value.characters = characters.map(c => new Character(c));
   }
 });
 //----------------------------------------------------------
@@ -86,6 +86,10 @@ watch(() => contentStore.scenariosModal, async (val) => {
     </button>
   </div>
   <TextareaField id="storyThusFar" rows="6" v-model="tale.description" :showWordCount="true"></TextareaField>
+
+  <div>    
+    <TextareaField id="storyThusFar" rows="6" v-model="tale.initialContent" :showWordCount="true"></TextareaField>
+  </div>
   
 
   <div class="config-content-selection">
