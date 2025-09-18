@@ -4,15 +4,12 @@ import { ref, watch } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useDialog } from 'src/code/composables/useDialog.js';
 //----------------------------------------------------------
-import CharacterList from './controls/CharacterList.vue'
-import CharacterNewEdit from './controls/CharacterNewEdit.vue'
+import InstructionList from './controls/InstructionList.vue'
+import InstructionNewEdit from './controls/InstructionNewEdit.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
-const props = defineProps({
-  select: { type: Boolean, default: true }
-});
 const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
@@ -21,11 +18,11 @@ const selectedItems = ref([]);
 const editingItem = ref(false);
 //----------------------------------------------------------
 async function listItems() {
-  items.value = await appStore.listCharacters();
+  items.value = await appStore.listInstructions();
 }
 //----------------------------------------------------------
 async function saveItem(item) {
-  await appStore.saveCharacter(item);
+  await appStore.saveInstruction(item);
   await listItems();
   editingItem.value = false;
 }
@@ -33,10 +30,10 @@ async function saveItem(item) {
 async function removeItem(item) {
   const confirm = await dialog.confirm({
     title: 'Confirm Delete',
-    text: `Are you sure you want to delete the character "${item.name}"? This action cannot be undone.`
+    text: `Are you sure you want to delete the instruction "${item.name}"? This action cannot be undone.`
   });
   if(confirm) {
-    await appStore.deleteCharacter(item.id);
+    await appStore.deleteInstruction(item.id);
     await listItems();
   }
 }
@@ -47,7 +44,7 @@ function editItem(item) {
 }
 //----------------------------------------------------------
 function submitSelections() {
-  emit('finish', [...selectedItems.value]);  //todo - clear local?
+  emit('finish', [...selectedItems.value]);
 }
 //----------------------------------------------------------
 watch(() => appStore.db.dbReady.value, async () => {  
@@ -56,11 +53,10 @@ watch(() => appStore.db.dbReady.value, async () => {
 //----------------------------------------------------------
 </script>
 <template>
-<div class="character-manager">
+<div class="instruction-manager">
 
-<CharacterList 
+<InstructionList 
   v-model="selectedItems"
-  :select="select"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"
@@ -68,7 +64,7 @@ watch(() => appStore.db.dbReady.value, async () => {
   @finish="submitSelections"
   v-if="!editingItem" />
 
-<CharacterNewEdit 
+<InstructionNewEdit 
   :item="selectedItem"
   @cancel="editingItem=false; selectedItem=null"
   @save="saveItem"
@@ -78,7 +74,9 @@ watch(() => appStore.db.dbReady.value, async () => {
 </template>
 
 <style scoped lang="scss">
-.character-manager {
+.instruction-manager {
+  min-width: 500px;
+  max-width: 700px;
   width: 100%;
 }
 </style>

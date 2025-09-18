@@ -42,6 +42,12 @@ export const useAppStore = defineStore('useAppStore', {
     async saveCharacter(item) {
       return await this.db.Characters.put(item);
     },
+    async getCharacter(id) {
+      return await this.db.Characters.get(id);
+    },
+    async getCharacters(ids) {
+      return await this.db.Characters.getCollection(ids);
+    },
     async deleteCharacter(id) {
       return await this.db.Characters.delete(id);
     },
@@ -51,6 +57,9 @@ export const useAppStore = defineStore('useAppStore', {
     },
     async saveHero(item) {
       return await this.db.Heroes.put(item);
+    },
+    async getHero(id) {
+      return await this.db.Heroes.get(id);
     },
     async deleteHero(id) {
       return await this.db.Heroes.delete(id);
@@ -62,6 +71,12 @@ export const useAppStore = defineStore('useAppStore', {
     async saveLocation(item) {
       return await this.db.Locations.put(item);
     },
+    async getLocation(id) {
+      return await this.db.Locations.get(id);
+    },
+    async getLocations(ids) {
+      return await this.db.Locations.getCollection(ids);
+    },
     async deleteLocation(id) {
       return await this.db.Locations.delete(id);
     },
@@ -72,8 +87,24 @@ export const useAppStore = defineStore('useAppStore', {
     async saveScenario(item) {
       return await this.db.Scenarios.put(item);
     },
+    async getScenario(id) {
+      return await this.db.Scenarios.get(id);
+    },
     async deleteScenario(id) {
       return await this.db.Scenarios.delete(id);
+    },
+    //--------------------------------------------------------
+    async listInstructions() {
+      return await this.db.Instructions.list();
+    },
+    async saveInstruction(item) {
+      return await this.db.Instructions.put(item);
+    },
+    async getInstruction(id) {
+      return await this.db.Instructions.get(id);
+    },
+    async deleteInstruction(id) {
+      return await this.db.Instructions.delete(id);
     },
     //--------------------------------------------------------
  

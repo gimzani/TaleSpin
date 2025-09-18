@@ -29,3 +29,8 @@ export const AI_VOICE = {
   SECOND_PERSON: 'Second Person Voice',
   THIRD_PERSON: 'Third Person Voice'
 }
+
+export const AI_VOICE_COMMANDS = {
+  "Second Person Voice": "- Always refer to the user as 'you', unless a character is speaking directly to the user by name.",
+  "Third Person Voice": "- Always refer to the user in the appropriate pronoun for their gender, unless a character is speaking directly to the user by name."
+}

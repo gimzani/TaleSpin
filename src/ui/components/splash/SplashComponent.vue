@@ -21,8 +21,8 @@ async function showGameList() {
   loadGameModal.show = true;
 }
 //----------------------------------------------------------
-async function loadGame(tale) {
-  await gameStore.loadTale(tale.id);
+async function loadGame(taleId) {
+  await gameStore.loadTale(taleId);
   appStore.setActiveScreen(SCREENS.PLAY);  
 }
 //----------------------------------------------------------
@@ -30,9 +30,18 @@ async function listSavedGames() {
   tales.value = await appStore.listSaveGames();
 }
 //----------------------------------------------------------
+async function tryLoadTale() {
+  let taleJson = localStorage.getItem('tale');
+  if(taleJson) {
+    let obj = JSON.parse(taleJson);
+    await loadGame(obj.taleId);
+  }
+}
+//----------------------------------------------------------
 watch(() => appStore.db.dbReady.value, async (val) => {  
   if(val) {      
     await listSavedGames();
+    await tryLoadTale();
   }
 }, { immediate: true });
 //----------------------------------------------------------
@@ -53,7 +62,7 @@ watch(() => appStore.db.dbReady.value, async (val) => {
   <div class="game-list">
     <div class="game-list-item" v-for="t in tales">
       <div>{{ t.name }}</div>
-      <button @click="loadGame(t)">Load</button>
+      <button @click="loadGame(t.id)">Load</button>
     </div>
   </div>
 

@@ -6,6 +6,7 @@ import LocationListing from './LocationListing.vue';
 //----------------------------------------------------------
 const props = defineProps({
   modelValue: { type: Array },
+  select: { type: Boolean, default: true },
   items: { type: Array }
 });
 const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item', 'finish']);
@@ -13,12 +14,14 @@ const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-
 const itemSelections = ref(new Set());
 //----------------------------------------------------------
 function toggleSelect(item) {
-  if(itemSelections.value.has(item.id)) {
-    itemSelections.value.delete(item.id);
-  } else {    
-    itemSelections.value.add(item.id);
+  if(props.select) {
+    if(itemSelections.value.has(item.id)) {
+      itemSelections.value.delete(item.id);
+    } else {
+      itemSelections.value.add(item.id);
+    }
+    emit('update:modelValue', Array.from(itemSelections.value));    
   }
-  emit('update:modelValue', Array.from(itemSelections.value));
 }
 //----------------------------------------------------------
 watch(() => props.modelValue, (newVal) => {
@@ -44,6 +47,7 @@ watch(() => props.modelValue, (newVal) => {
     <LocationListing 
       v-for="item in items" 
       :key="item.id" 
+      :select="select"
       :item="item" 
       :selected="itemSelections.has(item.id)"
       @select="toggleSelect(item)"

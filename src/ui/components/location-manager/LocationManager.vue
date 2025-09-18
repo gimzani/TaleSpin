@@ -10,6 +10,9 @@ import LocationNewEdit from './controls/LocationNewEdit.vue'
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
+const props = defineProps({
+  select: { type: Boolean, default: true }
+});
 const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
@@ -57,6 +60,7 @@ watch(() => appStore.db.dbReady.value, async () => {
 
 <LocationList 
   v-model="selectedItems"
+  :select="select"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"

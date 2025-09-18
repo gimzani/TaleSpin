@@ -2,29 +2,13 @@
 //----------------------------------------------------------
 import { ref, watch } from 'vue'
 //----------------------------------------------------------
-import CharacterListing from './CharacterListing.vue';
+import InstructionListing from './InstructionListing.vue';
 //----------------------------------------------------------
 const props = defineProps({
   modelValue: { type: Array },
-  select: { type: Boolean, default: true },
   items: { type: Array }
 });
 const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item', 'finish']);
-//----------------------------------------------------------
-const itemSelections = ref(new Set());
-//----------------------------------------------------------
-function toggleSelect(item) {
-  if(itemSelections.value.has(item.id)) {
-    itemSelections.value.delete(item.id);
-  } else {    
-    itemSelections.value.add(item.id);
-  }
-  emit('update:modelValue', Array.from(itemSelections.value));
-}
-//----------------------------------------------------------
-watch(() => props.modelValue, (newVal) => {
-  itemSelections.value = new Set(newVal);
-}, { immediate: true }) 
 //----------------------------------------------------------
 </script>
 <template>
@@ -32,7 +16,7 @@ watch(() => props.modelValue, (newVal) => {
 
   <div class="component-list-header">
     <div class="component-list-header-title">
-      Characters
+      Instructions
     </div>   
     <div>
       <button class="success" @click="$emit('new-item')">
@@ -42,13 +26,10 @@ watch(() => props.modelValue, (newVal) => {
   </div>  
 
   <div class="component-list-items">
-    <CharacterListing 
+    <InstructionListing 
       v-for="item in items" 
       :key="item.id" 
-      :select="select"
       :item="item" 
-      :selected="itemSelections.has(item.id)"
-      @select="toggleSelect(item)"
       @edit="$emit('edit-item', item)"
       @remove="$emit('remove-item', item)" />
   </div>

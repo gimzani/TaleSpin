@@ -2,14 +2,20 @@
 //----------------------------------------------------------
 import { ref, watch } from 'vue'
 import { useAppStore } from 'src/code/stores/useAppStore'; 
-import { useContentStore } from 'src/code/stores/useContentStore'; 
+import { useGameStore } from 'src/code/stores/useGameStore'; 
 import { getKeyCode } from 'src/code/codegen.js'
+import { SCREENS } from 'src/code/enums.js';
 //----------------------------------------------------------
 const appStore = useAppStore();
-const contentStore = useContentStore();
+const gameStore = useGameStore();
 //----------------------------------------------------------
 const selectedScreen = ref(null);
 const expanded = ref(false);
+//----------------------------------------------------------
+async function quit() {
+  localStorage.removeItem('tale');
+  appStore.setActiveScreen(SCREENS.SPLASH);
+}
 //----------------------------------------------------------
 function screenSelected() {
   appStore.setActiveScreen(selectedScreen.value);
@@ -18,6 +24,11 @@ function screenSelected() {
 function getRandomCode() {
   let code = getKeyCode(8);
   console.log(code);
+}
+//----------------------------------------------------------
+async function runTestScripts() {
+  let result = await gameStore.testScript();
+  console.log(result);
 }
 //----------------------------------------------------------
 watch(() => appStore.activeScreenName, (val) => {
@@ -34,20 +45,11 @@ watch(() => appStore.activeScreenName, (val) => {
     </button>
   </div>
 
-  <div class="fab-menu" v-if="expanded">
-    <button @click="contentStore.heroesModal=true" title="open heroes manager">
-      <font-awesome-icon icon="fa-solid fa-user" /> Hero
-    </button>
-    <button @click="contentStore.charactersModal=true" title="open locations manager">
-      <font-awesome-icon icon="fa-solid fa-users" /> Characters
-    </button>
-    <button @click="contentStore.locationsModal=true" title="open locations manager">
-      <font-awesome-icon icon="fa-solid fa-dungeon" /> Locations
-    </button>
-    <button @click="contentStore.scenariosModal=true" title="open scenarios manager">
-      <font-awesome-icon icon="fa-solid fa-terminal" /> Scenarios
-    </button>
+  <div class="fab-menu" v-if="expanded" @mouseleave="expanded=false">
     <div v-if="appStore.debugMode">
+      <button class="w-100" @click="runTestScripts" title="test code">
+        <font-awesome-icon icon="fa-solid fa-flask" /> Test&nbsp;Scripts
+      </button>  
       <hr style="width: 150px;" />
       <select class="w-100" v-model="selectedScreen" @change="screenSelected">
         <option v-for="s in appStore.screenList" :value="s" :key="s">{{ s }}</option>
@@ -58,8 +60,12 @@ watch(() => appStore.activeScreenName, (val) => {
       </button>  
       <button class="w-100" @click="appStore.seedDatabase" title="seed database">
         <font-awesome-icon icon="fa-seedling" /> Seed Database
-      </button>       
+      </button>      
+      <hr style="width: 150px;" /> 
     </div>
+    <button class="w-100" @click="quit" title="quit game">
+      <font-awesome-icon icon="fa-solid fa-power-off" /> Quit
+    </button>  
  
   </div>
 

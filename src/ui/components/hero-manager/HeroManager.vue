@@ -10,6 +10,9 @@ import HeroNewEdit from './controls/HeroNewEdit.vue'
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
+const props = defineProps({
+  select: { type: Boolean, default: true }
+});
 const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
@@ -57,6 +60,7 @@ watch(() => appStore.db.dbReady.value, async () => {
 
 <HeroList 
   v-model="selectedItem"
+  :select="select"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"

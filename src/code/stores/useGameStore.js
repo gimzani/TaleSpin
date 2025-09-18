@@ -2,19 +2,18 @@
 import { toRaw } from 'vue'
 import { defineStore } from 'pinia';
 import ollama from 'ollama/browser';
-import AiPrompt from 'src/code/ai/AiPrompt.js';
+import * as prompt from 'src/code/promptUtils.js'
 //------------------------------------------------------------------
 import Tale from 'src/code/models/Tale.js';
-import Session from 'src/code/models/Session.js';
-import ChatMessage from 'src/code/models/ChatMessage.js';
+import PromptRequest from 'src/code/models/PromptRequest.js';
 //------------------------------------------------------------------
 export const useGameStore = defineStore('useGameStore', {
   state: () => ({
 
-    ai: null,
-    tale: null,
-    session: null,
+    model: 'talespin',
 
+    tale: null,
+    chatLog: '',
     networkInUse: false
     
   }),
@@ -28,74 +27,121 @@ export const useGameStore = defineStore('useGameStore', {
   },
   actions: {
     //--------------------------------------------------------
-    async newTale(taleData) {
+    //#region Save/Load Tale
+    //--------------------------------------------------------
+    async newTale(taleData, initialContent) {
       const tale = new Tale(taleData);
-      this.newSession(tale);
+      this.tale = tale;
+
+      this.setActiveCharacter(tale.characters[0].id);
+      this.setActiveLocation(tale.locations[0].id);
+
+      tale.messages = prompt.sliceChatLog(initialContent);
+
       this.saveTale(tale);
+      localStorage.setItem('tale', JSON.stringify({taleId: tale.id}));
     },
     //--------------------------------------------------------
-    async saveTale(tale) {
-      this.tale = tale;
-      const clone = JSON.parse(JSON.stringify(tale));
+    async saveTale() {
+      const clone = JSON.parse(JSON.stringify(this.tale));
       return await this.db.Tales.put(clone);
     },
     //--------------------------------------------------------
     async loadTale(taleId) {
       const tale = await this.db.Tales.get(taleId);
       this.tale = new Tale(tale);
-      if(this.tale.sessionId) {
-        this.loadSession(this.tale.sessionId);
-      }
+      localStorage.setItem('tale', JSON.stringify({taleId: tale.id}));
     },
     //--------------------------------------------------------
+    //#endregion
     //--------------------------------------------------------
-    newSession(tale) {
-      const session = new Session();
-      tale.sessionId = session.id;
-      session.memoryBank.chatLog.push({ role: "assistant", content: tale.initialContent });
-      session.fromTale(tale);
-      this.saveSession(session);
+    //#region Chat Functions
+    //--------------------------------------------------------
+    renderChat() {
+      this.chatLog = this.tale.messages.join('\n\n');  // todo: limit to 20 OR make a getter?
     },
     //--------------------------------------------------------
-    async saveSession(session) {
-      this.session = session;
-      const clone = JSON.parse(JSON.stringify(session));
-      return await this.db.Sessions.put(clone);
+    updateMessages(text) {
+      this.tale.messages = prompt.sliceChatLog(text);
+      this.renderChat();
     },
     //--------------------------------------------------------
-    async loadSession(sessionId) {
-      const session = await this.db.Sessions.get(sessionId);
-      this.session = session;
+    async setActiveCharacter(id) {
+      this.tale.characters.forEach(c => c.active=false);
+      let ind = this.tale.characters.findIndex(c => c.id===id);
+      this.tale.characters[ind].active=true;
     },
     //--------------------------------------------------------
-    //--------------------------------------------------------
-    async initGameState() {
-      this.ai = new AiPrompt();
-      await this.ai.init(this.session);
+    async setActiveLocation(id) {
+      this.tale.locations.forEach(c => c.active=false);
+      let ind = this.tale.locations.findIndex(c => c.id===id);
+      this.tale.locations[ind].active=true;
     },
     //--------------------------------------------------------
-    async sendPrompt(userString) {
+    //#endregion
+    //--------------------------------------------------------
 
-      let session = { ...this.session };
 
-      session.memoryBank.chatLog.push({ role: "user", content: userString });
+    //--------------------------------------------------------  test script
+    async testScript() {
 
-      const storyPrompt = this.ai.buildStoryPrompt(session);
-      console.log('storyPrompt?', toRaw(storyPrompt));
+      // let chatLog = await fetch('/chatLog.txt').then(res => res.text());
+      // return prompt.sliceChatLog(chatLog);
 
-      storyPrompt.messages = [...storyPrompt.messages, ...toRaw(this.rollingChatLog)];
+      let promptContent = await prompt.buildNextPrompt(this.tale, "So now what?");
+
+      console.log(promptContent);
+
+    },
+
+    //--------------------------------------------------------
+    //--------------------------------------------------------
+    //#region PROMPT FUNCTIONS
+    //--------------------------------------------------------
+    async sendPrompt(userInput) {
+
+      let character = prompt.getActiveCharacter(this.tale);
+
+      let promptContent = await prompt.buildNextPrompt(this.tale, userInput);
+
+      let req = new PromptRequest({
+        model: this.model,
+        prompt: promptContent,
+        options: {
+          stop: [
+            '\n\n',
+            `\n${this.tale.hero.name}:`,
+            `\n${character.name}:`
+          ]
+        }
+      });
+
+      // console.log(req.prompt);
+      // return;
+
+      this.tale.messages.push(`${this.tale.hero.name}: ${userInput}`);
+      this.renderChat();
 
       this.networkInUse = true;
-      let res =  await ollama.chat(storyPrompt);
-      console.log('raw response', res);
+      const response = await ollama.generate(req);
+
+      let nextIndex = this.tale.messages.length;
+      this.tale.messages[nextIndex] = `${character.name}: `;
+      
+      for await (const part of response) {
+        this.tale.messages[nextIndex] += part.response;
+        this.renderChat();
+      }
+
       this.networkInUse = false;
-
-      session.memoryBank.chatLog.push(res.message);
-
-      this.saveSession(session);
 
     }  
     //--------------------------------------------------------
+
+
+    //--------------------------------------------------------
+    //#endregion
+
     
   }
 })

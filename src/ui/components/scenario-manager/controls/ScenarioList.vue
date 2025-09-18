@@ -6,6 +6,7 @@ import ScenarioListing from './ScenarioListing.vue';
 //----------------------------------------------------------
 const props = defineProps({
   modelValue: { type: String },
+  select: { type: Boolean, default: true },
   items: { type: Array }
 });
 const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-item', 'finish']);
@@ -13,7 +14,9 @@ const emit = defineEmits(['update:modelValue', 'new-item', 'edit-item', 'remove-
 const itemSelection = ref(null);
 //----------------------------------------------------------
 function toggleSelect(item) {
-  emit('update:modelValue', item.id);
+  if(props.select) {      
+    emit('update:modelValue', item.id);
+  }
 }
 //----------------------------------------------------------
 watch(() => props.modelValue, (newVal) => {
@@ -39,6 +42,7 @@ watch(() => props.modelValue, (newVal) => {
     <ScenarioListing 
       v-for="item in items" 
       :key="item.id" 
+      :select="select"
       :item="item" 
       :selected="itemSelection === item.id"
       @select="toggleSelect(item)"

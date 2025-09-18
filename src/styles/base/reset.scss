@@ -5,8 +5,14 @@ html, body, #app {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  height: 100%;
   background-color: var(--background-color);
   color: var(--foreground-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+hr {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #555;
+  width: 90%;
 }

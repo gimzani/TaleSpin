@@ -1,3 +1,0 @@
-Summarize the provided content into a single paragraph.
- - Capture the main points.
- - Be concise.

@@ -1,58 +1,65 @@
 <script setup>
 //----------------------------------------------------------
-import { watch, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { SCREENS, STORY_GENRE, AI_VOICE } from 'src/code/enums.js';
 import { useAppStore } from 'src/code/stores/useAppStore'; 
 import { useGameStore } from 'src/code/stores/useGameStore'; 
-import { useContentStore } from 'src/code/stores/useContentStore'; 
 //----------------------------------------------------------
-import Character from 'src/code/models/Character.js'
 import Tale from 'src/code/models/Tale.js'
+import Character from 'src/code/models/Character.js'
 //----------------------------------------------------------
 import TextareaField from 'src/ui/components/global/TextareaField.vue';
-import ModalManager from 'src/ui/components/global/ModalManager.vue';
+import HeroManager from 'src/ui/components/hero-manager/HeroManager.vue'
+import CharacterManager from 'src/ui/components/character-manager/CharacterManager.vue'
+import LocationManager from 'src/ui/components/location-manager/LocationManager.vue'
+import ScenarioManager from 'src/ui/components/scenario-manager/ScenarioManager.vue'
+import Modal from 'src/ui/components/Modal.vue'
 //----------------------------------------------------------
 const appStore = useAppStore();
 const gameStore = useGameStore();
-const contentStore = useContentStore();
-const tale = ref(new Tale());
 //----------------------------------------------------------
-const ready = computed(() => (tale.value.hero && tale.value.characters.length>0 && tale.value.locations.length>0 && tale.value.name && tale.value.description) );
+const tale = ref(new Tale());
+const initialContent = ref(null);
+//----------------------------------------------------------
+const ready = computed(() => (tale.value.hero && tale.value.characters.length>0 && tale.value.locations.length>0 && tale.value.name && tale.value.scenario) );
+//----------------------------------------------------------
+const heroesModal = ref(false);
+const charactersModal = ref(false);
+const locationsModal = ref(false);
+const scenariosModal = ref(false);
 //----------------------------------------------------------
 function cancel() {
   appStore.setActiveScreen(SCREENS.SPLASH);
 }
 //----------------------------------------------------------
 async function beginTheStory() {
-  await gameStore.newTale(tale.value);
+  await gameStore.newTale(tale.value, initialContent.value);
   appStore.setActiveScreen(SCREENS.PLAY);
 }
 //----------------------------------------------------------
-watch(() => contentStore.heroesModal, async (val) => {
-  if(!val) {
-    tale.value.hero = await contentStore.pullHeroSelection();
-  }
-});
 //----------------------------------------------------------
-watch(() => contentStore.charactersModal, async (val) => {
-  if(!val) {
-    let characters = await contentStore.pullCharacterSelection();
-    tale.value.characters = characters.map(c => new Character(c));
-  }
-});
+async function setHero(heroId) {
+  tale.value.hero = await appStore.getHero(heroId);
+  heroesModal.value=false;
+}
 //----------------------------------------------------------
-watch(() => contentStore.locationsModal, async (val) => {
-  if(!val) {
-    tale.value.locations = await contentStore.pullLocationSelection();
-  }
-});
+async function setCharacters(characterIds) {
+  let characters = await appStore.getCharacters(characterIds);
+  tale.value.characters = characters.map(c => new Character(c));
+  charactersModal.value=false;
+}
 //----------------------------------------------------------
-watch(() => contentStore.scenariosModal, async (val) => {
-  if(!val) {
-    const scenario = await contentStore.pullScenarioSelection(); 
-    tale.value.description = scenario.text;
-  }
-});
+async function setLocations(locationIds) {
+  let locations = await appStore.getLocations(locationIds);
+  tale.value.locations = locations;
+  locationsModal.value=false;
+}
+//----------------------------------------------------------
+async function setScenario(scenarioId) {
+  let scenario = await appStore.getScenario(scenarioId);
+  tale.value.scenario = scenario.text;
+  scenariosModal.value=false;
+}
 //----------------------------------------------------------
 </script>
 <template>
@@ -81,20 +88,18 @@ watch(() => contentStore.scenariosModal, async (val) => {
   
   <div class="config-content-selection mt-3 mb-2">
     <label>Story Thus Far: </label>  
-    <button class="icon" @click="contentStore.scenariosModal=true">
+    <button class="icon" @click="scenariosModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
-  <TextareaField id="storyThusFar" rows="6" v-model="tale.description" :showWordCount="true"></TextareaField>
-
+  <TextareaField id="storyThusFar" rows="6" v-model="tale.scenario" :showWordCount="true" placeholder="Story thus far"></TextareaField>
   <div>    
-    <TextareaField id="storyThusFar" rows="6" v-model="tale.initialContent" :showWordCount="true"></TextareaField>
-  </div>
-  
+    <TextareaField id="initialContent" rows="6" v-model="initialContent" :showWordCount="true" placeholder="Initial Content"></TextareaField>
+  </div>  
 
   <div class="config-content-selection">
     <label>The Hero of the Story:</label>
-    <button class="icon" @click="contentStore.heroesModal=true">
+    <button class="icon" @click="heroesModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -104,7 +109,7 @@ watch(() => contentStore.scenariosModal, async (val) => {
   
   <div class="config-content-selection">
     <label>Supporting Characters:</label>
-    <button class="icon" @click="contentStore.charactersModal=true">
+    <button class="icon" @click="charactersModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -114,7 +119,7 @@ watch(() => contentStore.scenariosModal, async (val) => {
   
   <div class="config-content-selection">
     <label>Story Locations: </label>  
-    <button class="icon" @click="contentStore.locationsModal=true">
+    <button class="icon" @click="locationsModal=true">
       <font-awesome-icon icon="plus" />
     </button>
   </div>
@@ -128,7 +133,23 @@ watch(() => contentStore.scenariosModal, async (val) => {
     <button class="success" @click="beginTheStory" :disabled="!ready">Begin</button>
   </div>
 
-  <ModalManager />
+  <!-- MODALS -->
+
+  <Modal container-class="md" :show="heroesModal" @close="heroesModal=false">
+    <HeroManager @finish="setHero" />
+  </Modal>
+
+  <Modal container-class="md" :show="charactersModal" @close="charactersModal=false">
+    <CharacterManager @finish="setCharacters" />
+  </Modal>
+
+  <Modal container-class="md" :show="locationsModal" @close="locationsModal=false">
+    <LocationManager @finish="setLocations" />
+  </Modal>
+
+  <Modal container-class="md" :show="scenariosModal" @close="scenariosModal=false">
+    <ScenarioManager @finish="setScenario" />
+  </Modal>
 
 </div>
 </template>

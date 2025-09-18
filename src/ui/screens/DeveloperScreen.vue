@@ -1,33 +1,42 @@
 <script setup>
 //----------------------------------------------------------
 import { ref, watch } from 'vue'
+import { useGameStore } from '../../code/stores/useGameStore.js'
 import TaleSpinDb from 'src/code/db/talespinDb';
-import ModalManager from 'src/ui/components/global/ModalManager.vue'
+import ContentManager from 'src/ui/components/ContentManager.vue'
 //----------------------------------------------------------
 const taleSpinDb = TaleSpinDb.getInstance();
+const gameStore = useGameStore();
 //----------------------------------------------------------
 const ready = ref(false);
-const modals = ref(null);
 //----------------------------------------------------------
-watch(() => taleSpinDb.dbReady.value, async () => {  
-  if(taleSpinDb.dbReady.value===true) {
-    ready.value = true;
-  }
+async function runAiPrompt() {
+  let prompt = await gameStore.test();
+  console.log(prompt);
+}
+//----------------------------------------------------------
+watch(() => taleSpinDb.dbReady.value, async () => {    
+  ready.value = taleSpinDb.dbReady.value;
 }, { immediate: true })
 //----------------------------------------------------------
 </script>
 <template>
 <div class="developer" v-if="ready">
 
-  <div class="dev-portal">
-    <ModalManager ref="modals" />
-  </div>
+  
+  <ContentManager/>
+
+
 
 </div>
 </template>
 
 <style scoped lang="scss">
 .developer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   height: 100vh;
 

@@ -18,5 +18,5 @@ onMounted(() => {
 
 <template>
 <component :is="appStore.activeScreen" />
-<GameFab v-if="appStore.activeScreenName!==SCREENS.SPLASH" />
+<GameFab />
 </template>

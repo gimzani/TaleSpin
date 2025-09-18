@@ -7,7 +7,7 @@ import Heroes from './modules/Heroes.js'
 import Scenarios from './modules/Scenarios.js'
 import Locations from './modules/Locations.js'
 import Tales from './modules/Tales.js'
-import Sessions from './modules/Sessions.js'
+import Instructions from './modules/Instructions.js'
 //-----------------------------------------------------------------------------
 export default class TaleSpinDb {
   //-----------------------------------
@@ -18,10 +18,9 @@ export default class TaleSpinDb {
   Scenarios = null;
   Locations = null;
   Tales = null;
-  Sessions = null;
+  Instructions = null;
   //-----------------------------------
   errorMessage = null;
-  ready = false;
   dbReady = ref(false); 
   //---------------------------------------------------------------------------
   static getInstance() {
@@ -74,7 +73,7 @@ export default class TaleSpinDb {
     this.Scenarios = new Scenarios(this.db);
     this.Locations = new Locations(this.db);
     this.Tales = new Tales(this.db);
-    this.Sessions = new Sessions(this.db);
+    this.Instructions = new Instructions(this.db);
   }
   //-----------------------------------
 }

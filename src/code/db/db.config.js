@@ -8,6 +8,6 @@ export default {
     { name: 'Scenarios', keys:'id' },
     { name: 'Locations', keys:'id' },
     { name: 'Tales', keys:'id' },
-    { name: 'Sessions', keys:'id' },
+    { name: 'Instructions', keys:'id' },
   ]
 }

@@ -1,13 +1,13 @@
 
-export default class Sessions {
+export default class Instructions {
   constructor(db) {
     this.db = db;
   }
 
   async list() {
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Sessions', 'readonly');
-      const store = tx.objectStore('Sessions');
+      const tx = this.db.transaction('Instructions', 'readonly');
+      const store = tx.objectStore('Instructions');
       store.getAll().addEventListener("success", (evt) => {
         let list = evt.target.result;
         list.sort((a, b) => (a.name > b.name) ? 1 : -1);
@@ -18,8 +18,8 @@ export default class Sessions {
   
   async get(code) {
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Sessions', 'readonly');
-      const store = tx.objectStore('Sessions');
+      const tx = this.db.transaction('Instructions', 'readonly');
+      const store = tx.objectStore('Instructions');
       store.get(code).addEventListener("success", (evt) => {
         resolve(evt.target.result);
       });
@@ -29,8 +29,8 @@ export default class Sessions {
   async put(req) {
     let objectClone = JSON.parse(JSON.stringify(req));
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Sessions', 'readwrite');
-      const store = tx.objectStore('Sessions');
+      const tx = this.db.transaction('Instructions', 'readwrite');
+      const store = tx.objectStore('Instructions');
       store.put(objectClone).addEventListener("success", (evt) => {
         resolve(true);
       });
@@ -39,8 +39,8 @@ export default class Sessions {
 
   async delete(code) {
     return new Promise((resolve) => {
-      const tx = this.db.transaction('Sessions', 'readwrite');
-      const store = tx.objectStore('Sessions');
+      const tx = this.db.transaction('Instructions', 'readwrite');
+      const store = tx.objectStore('Instructions');
       store.delete(code).addEventListener("success", (evt) => {
         resolve(evt.target.result);
       });

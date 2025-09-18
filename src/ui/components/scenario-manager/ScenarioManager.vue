@@ -10,6 +10,9 @@ import ScenarioNewEdit from './controls/ScenarioNewEdit.vue'
 const appStore = useAppStore();
 const dialog = useDialog();
 //----------------------------------------------------------
+const props = defineProps({
+  select: { type: Boolean, default: true }
+});
 const emit = defineEmits(['finish']);
 //----------------------------------------------------------
 const items = ref([]);
@@ -56,6 +59,7 @@ onMounted(async () => {
 
 <ScenarioList 
   v-model="selectedItem"
+  :select="select"
   :items="items" 
   @new-item="editingItem=true; selectedItem=null"
   @edit-item="editItem"

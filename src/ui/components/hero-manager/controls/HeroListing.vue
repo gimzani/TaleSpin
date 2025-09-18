@@ -4,15 +4,22 @@ import { ref } from 'vue'
 //----------------------------------------------------------
 const props = defineProps({
   item: { type: Object },
+  select: { type: Boolean, default: true },
   selected: { type: Boolean }
 });
 const emit = defineEmits(['select', 'edit', 'remove']);
 //----------------------------------------------------------
 const expanded = ref(false);
 //----------------------------------------------------------
+function selectItem(item) {
+  if(props.select) {
+    emit('select', item);
+  }
+}
+//----------------------------------------------------------
 </script>
 <template>
-<div class="component-list-item" :class="{ selected: selected }" @click="$emit('select', item)">
+<div class="component-list-item" :class="{ 'select': select, 'selected': selected }" @click="selectItem(item)">
   <div class="component-item-header">
     <div>
       <button class="icon me-2" @click.stop="expanded = !expanded">

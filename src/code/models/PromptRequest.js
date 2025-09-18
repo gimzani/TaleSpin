@@ -1,9 +1,11 @@
 
 //---------------------------------------------------------
-export default class Prompt {
+export default class PromptRequest {
 
   model = null;
-  messages = [];
+  prompt = null;
+  stream = true;
+  stop = [];
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -11,7 +13,8 @@ export default class Prompt {
 
   init(options) {
     this.model = options.model || this.model;
-    this.messages = options.messages || this.messages;
+    this.prompt = options.prompt || this.prompt;
+    this.stop = options.stop || this.stop;
   }
 
 }

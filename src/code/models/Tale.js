@@ -6,16 +6,22 @@ export default class Tale {
 
   id = getKeyCode(6);
   name = null;
-  description = null;
-  initialContent = null;
   genre = STORY_GENRE.MODERN;
   voice = AI_VOICE.SECOND_PERSON;
+  scenario = null;
 
   hero = null;
   characters = [];
   locations = [];  
 
-  sessionId = null;       // memory session
+  longterm = [];     // synopsis - per scene change (front-loaded)
+  shortterm = [];    // synopsis - per 15 messages
+
+  whatHappensNext = null;
+  writingInstruction = null;
+
+  messages = [];   // entire chat log
+  chatLog = null;   // entire chat log
 
   constructor(options) {
     if(options) { this.init(options); }
@@ -24,16 +30,23 @@ export default class Tale {
   init(options) {
     this.id = options.id || this.id;
     this.name = options.name || this.name;
-    this.description = options.description || this.description;
-    this.initialContent = options.initialContent || this.initialContent;
     this.genre = options.genre || this.genre;
-    this.voice = options.voice || this.voice;    
+    this.voice = options.voice || this.voice;
+    this.scenario = options.scenario || this.scenario;
 
     this.hero = options.hero || this.hero;
     this.characters = options.characters || this.characters;
     this.locations = options.locations || this.locations;
     
-    this.sessionId = options.sessionId || this.sessionId;
+    this.longterm = options.longterm || this.longterm;
+    this.shortterm = options.shortterm || this.shortterm;
+
+    this.whatHappensNext = options.whatHappensNext || this.whatHappensNext;
+    this.writingInstruction = options.writingInstruction || this.writingInstruction;
+
+    this.messages = options.messages || this.messages;
+    this.chatLog = options.chatLog || this.chatLog;
+    
   }
 
 }
